@@ -116,5 +116,6 @@ module.exports = {
         alphabetical: false,
       },
     ],
+    'vue/multi-word-component-names': 0,
   },
 }

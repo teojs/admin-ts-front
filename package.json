@@ -1,18 +1,21 @@
 {
   "name": "admin-ts-front",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview",
     "lint": "eslint src --ext .ts,.tsx,.vue,.js,.jsx",
-    "lint:fix": "eslint src --fix --ext .ts,.tsx,.vue,.js,.jsx"
+    "dev": "vite",
+    "lint:fix": "eslint src --fix --ext .ts,.tsx,.vue,.js,.jsx",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "vue-router": "^4.1.1",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@types/node": "^18.0.3",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "@vitejs/plugin-vue": "^2.3.3",
