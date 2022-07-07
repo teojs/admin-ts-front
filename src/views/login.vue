@@ -10,6 +10,7 @@
     </label>
     <button @click="submit">提交</button>
   </section>
+  <login-module />
 </template>
 
 <script lang="ts">
