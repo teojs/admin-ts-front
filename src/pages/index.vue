@@ -1,5 +1,5 @@
 <template>
-  <section id="wrapper" class="wrapper">DefaultLayouts</section>
+  <section id="wrapper" class="wrapper">index</section>
 </template>
 
 <script lang="ts">

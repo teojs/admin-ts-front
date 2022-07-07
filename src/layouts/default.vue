@@ -1,5 +1,6 @@
 <template>
   <section id="wrapper" class="wrapper">DefaultLayouts</section>
+  <router-view/>
 </template>
 
 <script lang="ts">
