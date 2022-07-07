@@ -19,11 +19,15 @@ export default defineComponent({
   name: 'login-view',
   components: {},
   data: () => ({
+    meta: {
+      title: '登录页面',
+    },
     userName: '',
     password: '',
   }),
   methods: {
     submit() {
+      this.$data.meta.title = this.userName
       this.$store.commit('login', {
         userName: this.userName,
         password: this.password,
