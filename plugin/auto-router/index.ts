@@ -9,14 +9,20 @@ interface ConfigEnv {
   command: 'serve' | 'build'
 }
 
-const pagesRoot = 'src/pages'
+interface CusConfig {
+  pagesDir: string
+  layoutsDir: string
+  routerDir: string
+}
 
-const autoRouter = () => ({
+const autoRouter = (cusConfig: CusConfig) => ({
   name: 'auto:router',
   async config(_config: any, { command }: ConfigEnv) {
-    await initRoutes()
+    const pagesDir = cusConfig.pagesDir || 'src/pages'
+    const layoutsDir = cusConfig.layoutsDir || 'src/pages'
+    await initRoutes(cusConfig)
     if (command === 'serve') {
-      const rootPath = path.join(process.cwd(), pagesRoot)
+      const rootPath = path.join(process.cwd(), pagesDir)
       let timer: NodeJS.Timeout = null
       fs.watch(
         rootPath,
@@ -31,7 +37,7 @@ const autoRouter = () => ({
           if (eventType === 'rename') {
             clearTimeout(timer)
             timer = setTimeout(() => {
-              initRoutes()
+              initRoutes(cusConfig)
             }, 300)
           }
         })

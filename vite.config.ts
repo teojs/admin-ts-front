@@ -25,7 +25,11 @@ export default defineConfig({
       throwOnError: true,
       throwOnWarning: true,
     }),
-    autoRouter(),
+    autoRouter({
+      pagesDir: 'src/pages',
+      layoutsDir: 'src/layouts',
+      routerDir: 'src/router',
+    }),
   ],
   resolve: {
     alias: {

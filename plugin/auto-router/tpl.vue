@@ -1,14 +1,12 @@
 <template>
-  <section id="wrapper" class="wrapper">新页面</section>
-  <router-view />
+  新页面
 </template>
 
 <route lang="json">
 {
   "meta": {
-    "title": "页面标题"
-  },
-  "dynamic": true
+    "title": "新页面"
+  }
 }
 </route>
 
