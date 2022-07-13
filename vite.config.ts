@@ -1,7 +1,8 @@
+import path from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import eslint from 'vite-plugin-eslint'
-const path = require('path')
+import autoRouter from './plugin/auto-router'
 
 interface Servers {
   [propName: string]: string
@@ -24,6 +25,7 @@ export default defineConfig({
       throwOnError: true,
       throwOnWarning: true,
     }),
+    autoRouter(),
   ],
   resolve: {
     alias: {

@@ -11,6 +11,9 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['vue', '@typescript-eslint'],
+  globals: {
+    NodeJS: true,
+  },
   rules: {
     'no-console': 1,
     'no-debugger': 1,
