@@ -21,8 +21,6 @@ export default async function initRoutes(cusConfig: CusConfig) {
   console.log('==正在初始化接口...')
   console.time('==初始化接口耗时：')
 
-  // let routeImport: string = '// !!!此文件是自动生成的，请勿修改和提交到Git上!!! \n'
-
   // 获取全部vue文件并格式化结构关系
   const files = readAllFileSync(cusConfig.apisDir)
   const dirStructure: DirStructure = {}
@@ -38,9 +36,6 @@ export default async function initRoutes(cusConfig: CusConfig) {
       '@'
     ).replace('.ts', '')}'\n`
   })
-  console.log(apiImport)
-
-  console.log(dirStructure)
 
   const apisDeclareContent = `
     /* eslint-disable no-unused-vars */
@@ -48,19 +43,16 @@ export default async function initRoutes(cusConfig: CusConfig) {
     ${apiImport}
     
     declare module '@vue/runtime-core' {
-      interface ComponentCustomProperties {
+      declare interface ComponentCustomProperties {
         $api: ${JSON.stringify(dirStructure, null, 2)}
       }
     }
     
   `.replace(/=="|"==/g, '')
 
-  const formatConfig = {
-    filePath: path.join(process.cwd(), '.eslintrc.js'),
-  }
   const formatFile = await format({
     text: apisDeclareContent,
-    ...formatConfig,
+    filePath: path.join(process.cwd(), '.eslintrc.js'),
   })
   const apisDeclareFile = mergePath(
     process.cwd(),
