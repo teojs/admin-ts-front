@@ -8,12 +8,10 @@ import { App } from 'vue'
 
 interface IApis {
   $http: typeof http
-  $api: IApis | null
 }
 
 const apis: IApis = {
   $http: http,
-  $api: null,
 }
 const allApis = import.meta.globEager('./apis/**/*.ts')
 for (const key in allApis) {
@@ -22,8 +20,6 @@ for (const key in allApis) {
 }
 
 // 自动注册/src/service/apis的所以接口
-
-apis.$api = apis
 
 export { apis }
 
