@@ -1,5 +1,7 @@
 <template>
-  <router-view />
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 
 <script lang="ts">
@@ -13,14 +15,13 @@ export default defineComponent({
   created() {},
   beforeMount() {},
   async mounted() {
-    const res = await this.$api.getUserInfo({
+    this.$api.getUserInfo({
       params: {
         userName: '1',
         cellPhone: '1',
       },
-      loading: '#page',
+      loading: '#app',
     })
-    console.log(res)
   },
   beforeUpdate() {},
   updated() {},

@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios'
+import axios, { AxiosRequestConfig, AxiosError } from 'axios'
 import loading from '../utils/loading'
 import Router from '../router'
 import _ from 'lodash'
@@ -87,13 +87,13 @@ axiosInstance.interceptors.response.use(
       body: null,
     }
   },
-  error => {
+  (error: AxiosError) => {
     if ('config' in error) {
       error?.config?.loadingCallBack?.close()
       // 这里可以弹出错误提示
     }
     return {
-      code: null,
+      code: error.code,
       message: error.message,
       body: null,
     }
