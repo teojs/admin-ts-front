@@ -18,7 +18,7 @@ interface CusConfig {
 }
 
 export default async function initRoutes(cusConfig: CusConfig) {
-  console.log('==正在初始化接口...')
+  console.log('\n==正在初始化接口...')
   console.time('==初始化接口耗时：')
 
   // 获取全部vue文件并格式化结构关系
@@ -28,7 +28,6 @@ export default async function initRoutes(cusConfig: CusConfig) {
   files.forEach(file => {
     const regExp = new RegExp(`${cusConfig.apisDir}/(.+?).ts`)
     const key = file.match(regExp)[1].replace(/\//g, '.')
-    console.log(key)
     _.set(dirStructure, key, `==typeof ${getVarName(key)}==`)
 
     apiImport += `import ${getVarName(key)} from '${file.replace(
