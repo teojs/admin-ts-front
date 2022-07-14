@@ -5,6 +5,8 @@ import router from './router'
 import mixin from './mixin'
 import components from './components'
 import service from './service'
+import 'normalize.css'
+import '@/styles/index.less'
 
 const app = createApp(App)
 
