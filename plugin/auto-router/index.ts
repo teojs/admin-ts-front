@@ -19,7 +19,6 @@ const autoRouter = (cusConfig: CusConfig) => ({
   name: 'auto:router',
   async config(_config: any, { command }: ConfigEnv) {
     const pagesDir = cusConfig.pagesDir || 'src/pages'
-    const layoutsDir = cusConfig.layoutsDir || 'src/pages'
     await initRoutes(cusConfig)
     if (command === 'serve') {
       const rootPath = path.join(process.cwd(), pagesDir)
@@ -34,6 +33,7 @@ const autoRouter = (cusConfig: CusConfig) => ({
               initTemplate(filePath)
             }
           }
+
           if (eventType === 'rename') {
             clearTimeout(timer)
             timer = setTimeout(() => {

@@ -12,7 +12,16 @@ export default defineComponent({
   beforeCreate() {},
   created() {},
   beforeMount() {},
-  mounted() {},
+  async mounted() {
+    const res = await this.$api.getUserInfo({
+      params: {
+        userName: '1',
+        cellPhone: '1',
+      },
+      loading: '#page',
+    })
+    console.log(res)
+  },
   beforeUpdate() {},
   updated() {},
   activated() {},
