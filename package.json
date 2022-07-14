@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "vue-tsc --noEmit && vite build",
-    "lint": "eslint src --ext .ts,.tsx,.vue,.js,.jsx",
     "dev": "vite --host",
+    "build": "vue-tsc --noEmit && vite build --mode uat",
+    "build:prod": "vue-tsc --noEmit && vite build",
+    "lint": "eslint src --ext .ts,.tsx,.vue,.js,.jsx",
     "lint:fix": "eslint src --fix --ext .ts,.tsx,.vue,.js,.jsx",
     "preview": "vite preview"
   },

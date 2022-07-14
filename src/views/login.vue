@@ -1,16 +1,7 @@
 <template>
-  <section id="wrapper" class="wrapper">
-    <label>
-      用户名：
-      <input v-model="userName" type="text" >
-    </label>
-    <label>
-      密码：
-      <input v-model="password" type="text" >
-    </label>
-    <button @click="submit">提交</button>
-  </section>
-  <login-module />
+  <div id="login">
+    <login-module />
+  </div>
 </template>
 
 <script lang="ts">
@@ -39,7 +30,9 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.wrapper {
-  padding-top: 70px;
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
