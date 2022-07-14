@@ -1,13 +1,16 @@
 /* eslint-disable no-unused-vars */
 import { ComponentCustomProperties } from 'vue'
-import { apis } from '@/service/index'
-import getUserInfo from '@/service/apis/user/getUserInfo'
+import comm from '@/service/apis/comm'
+import userbaseInfo from '@/service/apis/user/baseInfo'
+import usergetUserInfo from '@/service/apis/user/getUserInfo'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     $api: {
+      comm: typeof comm
       user: {
-        getUserInfo: typeof getUserInfo
+        baseInfo: typeof userbaseInfo
+        getUserInfo: typeof usergetUserInfo
       }
     }
   }

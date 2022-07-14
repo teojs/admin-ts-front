@@ -8,38 +8,36 @@ const axiosInstance = axios.create({
   baseURL: '/',
   withCredentials: true,
   timeout: 120000,
-  validateStatus: (status) => status >= 200 && status < 300,
+  validateStatus: status => status >= 200 && status < 300,
 })
 
-axiosInstance.interceptors.request.use(
-  config => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      config.headers!.Authorization = token
-    }
-
-    // 自动打开 loading
-    if (config.loading) {
-      switch (typeof config.loading) {
-        case 'string':
-          config.loadingCallBack = loading({ target: config.loading as string })
-          break
-        case 'object':
-          config.loadingCallBack = loading({ el: config.loading as HTMLElement })
-          break
-        case 'undefined':
-          break
-        default:
-          config.loadingCallBack = loading()
-          break
-      }
-    }
-    return config
+axiosInstance.interceptors.request.use(config => {
+  const token = localStorage.getItem('token')
+  if (token) {
+    config.headers!.Authorization = token
   }
-)
+
+  // 自动打开 loading
+  if (config.loading) {
+    switch (typeof config.loading) {
+      case 'string':
+        config.loadingCallBack = loading({ target: config.loading as string })
+        break
+      case 'object':
+        config.loadingCallBack = loading({ el: config.loading as HTMLElement })
+        break
+      case 'undefined':
+        break
+      default:
+        config.loadingCallBack = loading()
+        break
+    }
+  }
+  return config
+})
 
 axiosInstance.interceptors.response.use(
-  async(response) => {
+  async response => {
     response.config.loadingCallBack && response.config.loadingCallBack.close()
 
     if (response.status === 403) {
@@ -108,7 +106,7 @@ axiosInstance.interceptors.response.use(
  * @param {AxiosRequestConfig} config
  * @return {*}  {Promise<IAxiosResponseData<D>>}
  */
-export default function http <D>(
+export default function http<D>(
   config: AxiosRequestConfig
 ): Promise<IAxiosResponseData<D>> {
   return axiosInstance(config) as unknown as Promise<IAxiosResponseData<D>>

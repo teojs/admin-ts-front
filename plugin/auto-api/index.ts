@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { isVue, isEmptyFile } from './src/utils'
+import { isTsFile, isEmptyFile } from './src/utils'
 import initApi from './src/initApi'
 import initTemplate from './src/initTemplate'
 
@@ -19,28 +19,28 @@ const autoApi = (cusConfig: CusConfig) => ({
   async config(_config: any, { command }: ConfigEnv) {
     const apisDir = cusConfig.apisDir || 'src/service/apis'
     await initApi(cusConfig)
-    // if (command === 'serve') {
-    //   const rootPath = path.join(process.cwd(), apisDir)
-    //   let timer: NodeJS.Timeout = null
-    //   fs.watch(
-    //     rootPath,
-    //     { recursive: true },
-    //     (eventType, fileName) => {
-    //       const filePath = path.posix.join(rootPath, fileName)
-    //       if (isVue(filePath)) {
-    //         if (isEmptyFile(filePath)) {
-    //           initTemplate(filePath)
-    //         }
-    //       }
+    if (command === 'serve') {
+      const rootPath = path.join(process.cwd(), apisDir)
+      let timer: NodeJS.Timeout = null
+      fs.watch(
+        rootPath,
+        { recursive: true },
+        (eventType, fileName) => {
+          const filePath = path.posix.join(rootPath, fileName)
+          if (isTsFile(filePath)) {
+            if (isEmptyFile(filePath)) {
+              initTemplate(filePath)
+            }
+          }
 
-    //       if (eventType === 'rename') {
-    //         clearTimeout(timer)
-    //         timer = setTimeout(() => {
-    //           initApi(cusConfig)
-    //         }, 300)
-    //       }
-    //     })
-    // }
+          if (eventType === 'rename') {
+            clearTimeout(timer)
+            timer = setTimeout(() => {
+              initApi(cusConfig)
+            }, 300)
+          }
+        })
+    }
   },
 })
 

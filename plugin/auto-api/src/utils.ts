@@ -46,8 +46,8 @@ export function firstUpperCase(word: string): string {
   return a.toUpperCase() + z.join('')
 }
 
-export function getVarName($1: string, $2: string): string {
-  return firstUpperCase($1) + firstUpperCase($2)
+export function getVarName(key: string): string {
+  return key.replace(/\./, '')
 }
 
 export function getPath($1: string, $2: string): string {

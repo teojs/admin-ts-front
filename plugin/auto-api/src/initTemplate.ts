@@ -13,7 +13,7 @@ export default function initTemplate(filePath: string) {
     console.log('\n==发现空文件，正在写入模板：', filePath)
 
     const template = fs.readFileSync(
-      path.resolve(__dirname, '../tpl.vue'),
+      path.resolve(__dirname, '../tpl'),
       {
         encoding: 'utf-8',
       }
