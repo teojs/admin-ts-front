@@ -38,6 +38,7 @@ export default async function initRoutes(cusConfig: CusConfig) {
 
   const apisDeclareContent = `
     /* eslint-disable no-unused-vars */
+    /* !!!请勿修改此文件!!! */
     import { ComponentCustomProperties } from 'vue'
     ${apiImport}
     
