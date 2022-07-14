@@ -1,8 +1,6 @@
 import http from './axios.config'
-// import getUserInfo from './apis/getUserInfo'
 import _ from 'lodash'
 import { App } from 'vue'
-// import { IContext } from './service'
 
 // 自动注册/src/service/apis的所以接口
 

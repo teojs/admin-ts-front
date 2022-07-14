@@ -1,4 +1,4 @@
-import { LoadingCallBack } from '../utils/loading'
+import { LoadingCallBack } from '@/utils/loading'
 import { AxiosRequestConfig } from 'axios'
 
 // 定义后端接口返回的格式

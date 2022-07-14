@@ -15,10 +15,9 @@ export default defineComponent({
   created() {},
   beforeMount() {},
   async mounted() {
-    this.$api.getUserInfo({
+    this.$api.user.getUserInfo({
       params: {
-        userName: '1',
-        cellPhone: '1',
+        type: 1,
       },
       loading: '#app',
     })

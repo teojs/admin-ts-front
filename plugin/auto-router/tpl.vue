@@ -5,7 +5,8 @@
 <route lang="json">
 {
   "meta": {
-    "title": "新页面"
+    "title": "新页面",
+    "sort": 1
   }
 }
 </route>

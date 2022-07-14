@@ -1,8 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosError } from 'axios'
-import loading from '../utils/loading'
-import Router from '../router'
+import loading from '@/utils/loading'
+import Router from '@/router'
 import _ from 'lodash'
-import { IAxiosResponseData } from './service.d'
+import { IAxiosResponseData } from './types/axios'
 
 const axiosInstance = axios.create({
   baseURL: '/',
@@ -100,8 +100,16 @@ axiosInstance.interceptors.response.use(
   }
 )
 
-export default <D> (
+/**
+ * 封装好的Http请求
+ *
+ * @export
+ * @template D
+ * @param {AxiosRequestConfig} config
+ * @return {*}  {Promise<IAxiosResponseData<D>>}
+ */
+export default function http <D>(
   config: AxiosRequestConfig
-): Promise<IAxiosResponseData<D>> => {
+): Promise<IAxiosResponseData<D>> {
   return axiosInstance(config) as unknown as Promise<IAxiosResponseData<D>>
 }

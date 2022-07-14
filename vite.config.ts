@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import eslint from 'vite-plugin-eslint'
 import autoRouter from './plugin/auto-router'
+import autoApi from './plugin/auto-api'
 
 interface Servers {
   [propName: string]: string
@@ -29,6 +30,10 @@ export default defineConfig({
       pagesDir: 'src/pages',
       layoutsDir: 'src/layouts',
       routerDir: 'src/router',
+    }),
+    autoApi({
+      serviceDir: 'src/service',
+      apisDir: 'src/service/apis',
     }),
   ],
   resolve: {

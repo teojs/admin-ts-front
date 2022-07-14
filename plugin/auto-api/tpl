@@ -1,10 +1,8 @@
-import http from '../axios.config'
-import { IAxiosRequestConfig, IAxiosResponseData } from '../service'
-
+import http from '@/service/axios.config'
+import { IAxiosRequestConfig, IAxiosResponseData } from '@/service/types/axios'
 // 定义接口请求的params入参
 interface IRequestParams {
-  userName: string
-  cellPhone: string
+  type: number
 }
 
 // 定义接口请求的body入参
@@ -13,18 +11,25 @@ interface IRequestData {
   cellPhone: string
 }
 
-// 定义返回的数据
+// 定义返回的数据结构，body里的内容
 interface IAxiosResponseDataBody {
   userName: string
   cellPhone: string
 }
 
+/**
+ * ！！！把我这句话改成接口描述！！！
+ *
+ * @export
+ * @param {IAxiosRequestConfig<IRequestParams, IRequestData>} ctx
+ * @return {*}  {Promise<IAxiosResponseData<IAxiosResponseDataBody>>}
+ */
 export default function api(
   ctx: IAxiosRequestConfig<IRequestParams, IRequestData>
 ): Promise<IAxiosResponseData<IAxiosResponseDataBody>> {
   return http<IAxiosResponseDataBody>({
     method: 'get',
-    url: 'http://api.teojs.com/wethear',
+    url: '/api/',
     ...ctx,
   })
 }

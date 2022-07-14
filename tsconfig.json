@@ -14,7 +14,16 @@
       "esnext",
       "dom"
     ],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "~/*": [
+        "src/*"
+      ],
+      "@/*": [
+        "src/*"
+      ]
+    },
   },
   "include": [
     "src/**/*.ts",
@@ -22,14 +31,6 @@
     "src/**/*.tsx",
     "src/**/*.vue"
   ],
-  "paths": {
-    "~/*": [
-      "./*"
-    ],
-    "@/*": [
-      "./*"
-    ]
-  },
   "references": [
     {
       "path": "./tsconfig.node.json"
