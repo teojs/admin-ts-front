@@ -11,30 +11,49 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
+import { defineComponent } from 'vue'
 import WwLogin from '@/utils/wwLogin-1.2.7.js'
-import { ref, onUnmounted, nextTick } from 'vue'
 
-defineProps<{
-  mode: {
-    type: String
-  }
- }>()
-
-nextTick(() => {
-  const wwLogin = new WwLogin({
-    id: 'wx-login',
-    appid: import.meta.env.VITE_APPID,
-    agentid: import.meta.env.VITE_AGENTID,
-    redirect_uri:
-      import.meta.env.VITE_REDIRECT_HOST + import.meta.env.BASE_URL + 'login',
-    state: '',
-    href: '',
-    lang: 'zh',
-  })
-  onUnmounted(() => {
-    wwLogin.destroyed()
-  })
+export default defineComponent({
+  components: {},
+  props: {
+    mode: {
+      type: String,
+    },
+  },
+  data: () => ({
+    wwLogin: null as unknown as WwLogin,
+  }),
+  beforeCreate() {},
+  created() {},
+  beforeMount() {},
+  mounted() {
+    this.$nextTick(() => {
+      this.wwLogin = new WwLogin({
+        id: 'wx-login',
+        appid: import.meta.env.VITE_APPID,
+        agentid: import.meta.env.VITE_AGENTID,
+        redirect_uri:
+          import.meta.env.VITE_REDIRECT_HOST +
+          import.meta.env.BASE_URL +
+          'login',
+        state: '',
+        href: '',
+        lang: 'zh',
+      })
+    })
+  },
+  beforeUpdate() {},
+  updated() {},
+  beforeUnmount() {},
+  unmounted() {
+    this.wwLogin.destroyed()
+  },
+  methods: {},
+  filters: {},
+  computed: {},
+  watch: {},
 })
 </script>
 
