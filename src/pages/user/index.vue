@@ -1,7 +1,10 @@
 <template>
   <page-panel>
-    <template #title>index.vue</template>
-    <template #content>index 页面</template>
+    <template #title>user/index.vue</template>
+    <template #content>
+      user/index 页面
+      <router-view />
+    </template>
   </page-panel>
 </template>
 

@@ -1,6 +1,13 @@
 <template>
-  <section id="wrapper" class="wrapper">DefaultLayouts</section>
-  <router-view />
+  <section id="wrapper" class="wrapper">
+    <page-panel>
+      <template #title>default.vue</template>
+      <template #content>
+        默认的布局页面
+        <router-view />
+      </template>
+    </page-panel>
+  </section>
 </template>
 
 <script lang="ts">

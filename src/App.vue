@@ -14,14 +14,7 @@ export default defineComponent({
   beforeCreate() {},
   created() {},
   beforeMount() {},
-  async mounted() {
-    this.$api.user.getUserInfo({
-      params: {
-        type: 1,
-      },
-      loading: '#app',
-    })
-  },
+  async mounted() {},
   beforeUpdate() {},
   updated() {},
   activated() {},
