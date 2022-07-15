@@ -4,6 +4,8 @@ import vue from '@vitejs/plugin-vue'
 import eslint from 'vite-plugin-eslint'
 import autoRouter from './plugin/auto-router'
 import autoApi from './plugin/auto-api'
+import Components from 'unplugin-vue-components/vite'
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
 interface Servers {
   [propName: string]: string
@@ -34,6 +36,9 @@ export default defineConfig({
     autoApi({
       serviceDir: 'src/service',
       apisDir: 'src/service/apis',
+    }),
+    Components({
+      resolvers: [NaiveUiResolver()],
     }),
   ],
   resolve: {

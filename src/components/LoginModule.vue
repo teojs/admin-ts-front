@@ -8,35 +8,8 @@
       <div v-if="mode === 'scan'" class="qrcode-box">
         <div id="wx-login" />
       </div>
-      <div v-if="mode === 'accout'" class="qrcode-box">
-        <n-form ref="formRef"
-          :model="loginForm"
-          :rules="loginFormRules"
-        >
-          <n-form-item path="username" label="用户名">
-            <n-input
-              v-model:value="loginForm.username"
-              @keydown.enter.prevent
-            />
-          </n-form-item>
-          <n-form-item path="password" label="密码">
-            <n-input
-              v-model:value="loginForm.password"
-              type="password"
-              @keydown.enter.prevent
-            />
-          </n-form-item>
-          <n-row :gutter="[0, 24]">
-            <n-col :span="24">
-              <div style="display: flex; justify-content: flex-end">
-                <n-button round
-                  type="primary"
-                  @click="login"
-                > 验证 </n-button>
-              </div>
-            </n-col>
-          </n-row>
-        </n-form>
+      <div v-if="mode === 'account'" class="qrcode-box">
+        账号密码登录模式：开发中
       </div>
     </div>
   </div>
@@ -50,7 +23,7 @@ export default defineComponent({
   components: {},
   props: {
     mode: {
-      type: String as PropType<'scan' | 'accout'>,
+      type: String as PropType<'scan' | 'account'>,
       default: 'scan',
     },
   },
@@ -67,25 +40,27 @@ export default defineComponent({
   beforeMount() {},
   mounted() {
     this.$nextTick(() => {
-      this.wwLogin = new WwLogin({
-        id: 'wx-login',
-        appid: import.meta.env.VITE_APPID,
-        agentid: import.meta.env.VITE_AGENTID,
-        redirect_uri:
-          import.meta.env.VITE_REDIRECT_HOST +
-          import.meta.env.BASE_URL +
-          'login',
-        state: '',
-        href: '',
-        lang: 'zh',
-      })
+      if (this.mode === 'scan') {
+        this.wwLogin = new WwLogin({
+          id: 'wx-login',
+          appid: import.meta.env.VITE_APPID,
+          agentid: import.meta.env.VITE_AGENTID,
+          redirect_uri:
+            import.meta.env.VITE_REDIRECT_HOST +
+            import.meta.env.BASE_URL +
+            'login',
+          state: '',
+          href: '',
+          lang: 'zh',
+        })
+      }
     })
   },
   beforeUpdate() {},
   updated() {},
   beforeUnmount() {},
   unmounted() {
-    this.wwLogin.destroyed()
+    this.wwLogin && this.wwLogin.destroyed()
   },
   methods: {
     login() {},

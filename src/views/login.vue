@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <login-module />
+    <login-module mode="account" />
   </div>
 </template>
 
