@@ -62,7 +62,7 @@ module.exports = {
       'error',
       {
         singleline: 'never',
-        multiline: 'never',
+        multiline: 'always',
       },
     ],
     'vue/html-self-closing': [
@@ -95,7 +95,7 @@ module.exports = {
         attribute: 1,
         baseIndent: 1,
         closeBracket: 0,
-        alignAttributesVertically: true,
+        alignAttributesVertically: false,
         ignores: [],
       },
     ],
