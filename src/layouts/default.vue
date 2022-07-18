@@ -51,10 +51,6 @@
                 </n-icon>
               </template>
             </n-switch>
-            <!-- <i
-              :class="'iconfont icon-theme-' + $store.state.colorScheme"
-              @click="changeTheme"
-            /> -->
             <n-dropdown
               trigger="hover"
               :options="userOpt"
@@ -100,10 +96,7 @@ export default defineComponent({
   data: () => ({
     darkTheme,
     userOpt: [
-      {
-        label: '修改密码',
-        key: 'changePwd',
-      },
+
       {
         label: '退出登录',
         key: 'logout',

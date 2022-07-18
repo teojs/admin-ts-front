@@ -3,7 +3,6 @@ import App from './App.vue'
 import store from './store'
 import router from './router'
 import mixin from './mixin'
-import components from './components'
 import service from './service'
 import 'normalize.css'
 import '@/styles/index.less'
@@ -14,7 +13,6 @@ app
   .use(store)
   .use(service)
   .use(router)
-  .use(components)
 
 app.mixin(mixin)
 

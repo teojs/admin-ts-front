@@ -8,9 +8,34 @@
       <div v-if="mode === 'scan'" class="qrcode-box">
         <div id="wx-login" />
       </div>
-      <div v-if="mode === 'account'" class="qrcode-box">
-        账号密码登录模式：开发中
-      </div>
+
+      <n-form
+        v-if="mode === 'account'"
+        ref="formRef"
+        :model="loginForm"
+        :rules="loginFormRules"
+      >
+        <n-form-item path="username" label="用户名">
+          <n-input v-model:value="loginForm.username" @keydown.enter.prevent />
+        </n-form-item>
+        <n-form-item path="password" label="密码">
+          <n-input
+            v-model:value="loginForm.password"
+            type="password"
+            @keydown.enter.prevent
+          />
+        </n-form-item>
+        <n-row :gutter="[0, 24]">
+          <n-col :span="24">
+            <div style="display: flex; justify-content: flex-end">
+              <n-button round
+                type="primary"
+                @click="login"
+              > 验证 </n-button>
+            </div>
+          </n-col>
+        </n-row>
+      </n-form>
     </div>
   </div>
 </template>
@@ -33,7 +58,10 @@ export default defineComponent({
       username: '',
       password: '',
     },
-    loginFormRules: {},
+    loginFormRules: {
+      username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+      password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+    },
   }),
   beforeCreate() {},
   created() {},
