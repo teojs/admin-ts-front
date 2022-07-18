@@ -38,17 +38,29 @@
               </router-link>
             </n-breadcrumb-item>
           </n-breadcrumb>
-          <div class="right">
-            <i
+          <n-space class="right">
+            <n-switch :default-value="isDark" @update:value="changeTheme">
+              <template #checked-icon>
+                <n-icon>
+                  <MoonICon />
+                </n-icon>
+              </template>
+              <template #unchecked-icon>
+                <n-icon>
+                  <SunIcon />
+                </n-icon>
+              </template>
+            </n-switch>
+            <!-- <i
               :class="'iconfont icon-theme-' + $store.state.colorScheme"
               @click="changeTheme"
-            />
+            /> -->
             <n-dropdown
               trigger="hover"
               :options="userOpt"
               @select="handleUserOpt"
             >
-              <n-button type="text" icon-placement="right">
+              <n-button quaternary icon-placement="right">
                 <template #icon>
                   <n-icon>
                     <AngleDownIcon />
@@ -57,7 +69,7 @@
                 admin
               </n-button>
             </n-dropdown>
-          </div>
+          </n-space>
         </div>
       </n-layout-header>
       <n-layout-content class="content">
@@ -69,14 +81,21 @@
 
 <script lang="ts">
 import { defineComponent, h, resolveComponent } from 'vue'
+import type { VNode } from 'vue'
 import type { MenuOption } from 'naive-ui'
 import { darkTheme } from 'naive-ui'
-import { AngleDown as AngleDownIcon } from '@vicons/fa'
+import {
+  AngleDown as AngleDownIcon,
+  Moon as MoonICon,
+  Sun as SunIcon
+} from '@vicons/fa'
 
 export default defineComponent({
   name: 'DefaultLayouts',
   components: {
     AngleDownIcon,
+    MoonICon,
+    SunIcon,
   },
   data: () => ({
     darkTheme,
@@ -91,23 +110,29 @@ export default defineComponent({
       },
     ],
     collapsedMenu: false,
-    menuOptions: [],
+    menuOptions: [] as any[],
+    isDark: false,
   }),
+  created() {
+    this.extractMenu()
+  },
   methods: {
-    renderMenuLabel(option: MenuOption) {
+    renderMenuLabel(option: MenuOption): VNode | string | undefined {
       if (option.children) {
-        return option.label
+        return option.label as string
       }
       return h(
         resolveComponent('router-link') as string,
         {
-          to: option.path,
+          to: option.key,
         },
         { default: () => option.label }
       )
     },
-    changeTheme(colorScheme: 'dark' | 'light') {
-      this.$store.commit('switchTheme', colorScheme)
+    changeTheme(value: boolean) {
+      const switchTheme = value ? 'dark' : 'light'
+      this.$store.commit('switchTheme', switchTheme)
+      localStorage.setItem('switchTheme', switchTheme)
     },
     handleUserOpt(key: string) {
       switch (key) {
@@ -117,11 +142,13 @@ export default defineComponent({
       }
     },
     extractMenu() {
-      this.$api.comm.extractMenu({
+      const menuList = this.$api.comm.extractMenu({
         data: {
           routers: this.$router,
+          checkAuth: false,
         },
       })
+      this.menuOptions = menuList[0].children || []
     },
     getCurrentMenu() {
       const matched = this.$route.matched
@@ -137,7 +164,33 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.wrapper {
-  display: flex;
+.home {
+  height: 100vh;
+  padding: 10px;
+  background-color: transparent !important;
+  .main-layout {
+    background-color: transparent !important;
+    .header {
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      .right {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+    .content {
+      margin-top: 10px;
+    }
+  }
+  .logo {
+    font-size: 30px;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+  }
 }
 </style>

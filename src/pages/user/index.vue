@@ -11,7 +11,8 @@
 <route lang="json">
 {
   "meta": {
-    "title": "页面标题"
+    "title": "用户管理",
+    "sort": 2
   },
   "dynamic": true
 }

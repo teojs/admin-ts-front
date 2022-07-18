@@ -8,7 +8,8 @@
 <route lang="json">
 {
   "meta": {
-    "title": "页面标题"
+    "title": "首页",
+    "sort": 1
   },
   "dynamic": true
 }

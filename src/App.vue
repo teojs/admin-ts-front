@@ -54,9 +54,7 @@ export default defineComponent({
       let colorScheme = localStorage.getItem('colorScheme')
       const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
       if (colorScheme) {
-        colorScheme === 'light'
-          ? (this.theme = null)
-          : (this.theme = darkTheme)
+        colorScheme === 'light' ? (this.theme = null) : (this.theme = darkTheme)
       } else if (mediaQuery.matches) {
         colorScheme = 'dark'
         this.theme = darkTheme
@@ -67,7 +65,11 @@ export default defineComponent({
   computed: {
     ...mapState(['colorScheme']),
   },
-  watch: {},
+  watch: {
+    colorScheme(value: 'dark' | 'light') {
+      value === 'light' ? (this.theme = null) : (this.theme = darkTheme)
+    },
+  },
 })
 </script>
 

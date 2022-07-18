@@ -10,6 +10,9 @@ const router = createRouter({
       name: 'home',
       component: defaultLayout,
       children: routes,
+      meta: {
+        title: '后台管理',
+      },
     },
     {
       path: '/login',

@@ -19,7 +19,6 @@ interface WWLoginConfig {
 declare module '@/utils/wwLogin-1.2.7.js' {
   export default class WWLogin {
     constructor(config: WWLoginConfig)
-
     destroyed() {}
   }
 }
