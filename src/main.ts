@@ -6,13 +6,11 @@ import mixin from './mixin'
 import service from './service'
 import 'normalize.css'
 import '@/styles/index.less'
+import utils from './utils'
 
 const app = createApp(App)
 
-app
-  .use(store)
-  .use(service)
-  .use(router)
+app.use(store).use(service).use(router).use(utils)
 
 app.mixin(mixin)
 

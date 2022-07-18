@@ -21,6 +21,7 @@
             :icon-size="16"
             :collapsed-icon-size="16"
             :render-label="renderMenuLabel"
+            @update:value="changeMenu"
           />
         </n-scrollbar>
       </n-layout-sider>
@@ -69,7 +70,21 @@
         </div>
       </n-layout-header>
       <n-layout-content class="content">
-        <router-view />
+        <div class="tabs">
+          <router-link
+            v-for="tab in openedMenu"
+            :key="tab.key"
+            :to="tab.key"
+            class="tabs-item"
+          >
+            {{ tab.label }}
+          </router-link>
+        </div>
+        <router-view v-slot="{ Component, route }">
+          <keep-alive>
+            <component :is="Component" :key="route.fullPath" />
+          </keep-alive>
+        </router-view>
       </n-layout-content>
     </n-layout>
   </n-layout>
@@ -83,8 +98,9 @@ import { darkTheme } from 'naive-ui'
 import {
   AngleDown as AngleDownIcon,
   Moon as MoonICon,
-  Sun as SunIcon
+  Sun as SunIcon,
 } from '@vicons/fa'
+import { mapState } from 'vuex'
 
 export default defineComponent({
   name: 'DefaultLayouts',
@@ -96,7 +112,6 @@ export default defineComponent({
   data: () => ({
     darkTheme,
     userOpt: [
-
       {
         label: '退出登录',
         key: 'logout',
@@ -105,9 +120,16 @@ export default defineComponent({
     collapsedMenu: false,
     menuOptions: [] as any[],
     isDark: false,
+    openedMenu: [
+      {
+        key: '/index',
+        label: '首页',
+      },
+    ] as any[],
   }),
   created() {
     this.extractMenu()
+    this.isDark = this.colorScheme === 'dark'
   },
   methods: {
     renderMenuLabel(option: MenuOption): VNode | string | undefined {
@@ -123,9 +145,8 @@ export default defineComponent({
       )
     },
     changeTheme(value: boolean) {
-      const switchTheme = value ? 'dark' : 'light'
-      this.$store.commit('switchTheme', switchTheme)
-      localStorage.setItem('switchTheme', switchTheme)
+      const colorScheme = value ? 'dark' : 'light'
+      this.$store.commit('app/switchTheme', colorScheme)
     },
     handleUserOpt(key: string) {
       switch (key) {
@@ -152,6 +173,14 @@ export default defineComponent({
         }
       }
     },
+    changeMenu(key: string, item: MenuOption) {
+      if (this.$_.findIndex(this.openedMenu, { key }) === -1) {
+        this.openedMenu.push(item)
+      }
+    },
+  },
+  computed: {
+    ...mapState('app', ['colorScheme']),
   },
 })
 </script>
@@ -177,6 +206,25 @@ export default defineComponent({
     }
     .content {
       margin-top: 10px;
+      .tabs {
+        display: flex;
+        margin: 10px;
+        background-color: var(--bg-gray);
+        border-radius: 4px;
+        .tabs-item {
+          padding: 3px 10px;
+          border-radius: 4px;
+          margin: 5px 0 5px 5px;
+          transition: 0.3s;
+          cursor: pointer;
+          &.router-link-active {
+            background-color: var(--n-color);
+          }
+          &:hover {
+            background-color: var(--n-color);
+          }
+        }
+      }
     }
   }
   .logo {

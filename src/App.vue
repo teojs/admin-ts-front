@@ -51,19 +51,14 @@ export default defineComponent({
   unmounted() {},
   methods: {
     detectColorScheme() {
-      let colorScheme = localStorage.getItem('colorScheme')
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-      if (colorScheme) {
-        colorScheme === 'light' ? (this.theme = null) : (this.theme = darkTheme)
-      } else if (mediaQuery.matches) {
-        colorScheme = 'dark'
-        this.theme = darkTheme
-      }
-      this.$store.commit('switchTheme', colorScheme)
+      this.colorScheme === 'light'
+        ? (this.theme = null)
+        : (this.theme = darkTheme)
+      document.documentElement.setAttribute('data-theme', this.colorScheme)
     },
   },
   computed: {
-    ...mapState(['colorScheme']),
+    ...mapState('app', ['colorScheme']),
   },
   watch: {
     colorScheme(value: 'dark' | 'light') {

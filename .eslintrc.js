@@ -25,6 +25,8 @@ module.exports = {
       {
         objects: 'always-multiline',
         arrays: 'always-multiline',
+        imports: 'always-multiline',
+        exports: 'always-multiline',
       },
     ],
     'no-unused-vars': ['warn'],
