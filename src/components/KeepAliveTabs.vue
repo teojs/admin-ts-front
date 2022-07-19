@@ -3,22 +3,21 @@
     <router-link
       v-for="tab in tabs"
       :key="tab.key"
-      v-slot="{ isActive, href, navigate }"
+      v-slot="{ isActive, navigate }"
       :to="(tab.key as string)"
       custom
     >
-      <div class="tabs-item" :class="{ active: isActive }">
-        <a v-bind="$attrs"
-          :href="href"
-          class="title"
-          @click="navigate"
-        >
+      <div class="tabs-item"
+        :class="{ active: isActive }"
+        @click="navigate"
+      >
+        <span class="title">
           {{ tab.label }}
-        </a>
+        </span>
         <span
           v-if="tab.key !== '/index'"
           class="close-button"
-          @click="close(tab, isActive)"
+          @click.prevent.self="close(tab, isActive)"
         >
           <n-icon class="icon-close">
             <CloseOutlineIcon />

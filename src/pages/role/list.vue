@@ -1,6 +1,7 @@
 <template>
-  角色列表
+  角色列表1
   <input type="checkbox" >
+  <n-button @click="showMessage"> 弹框 </n-button>
 </template>
 
 <route lang="json">
@@ -18,7 +19,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   components: {},
   data: () => ({
-    test: 123,
+    user: 1,
   }),
   beforeCreate() {},
   created() {},
@@ -28,7 +29,11 @@ export default defineComponent({
   updated() {},
   beforeUnmount() {},
   unmounted() {},
-  methods: {},
+  methods: {
+    showMessage() {
+      this.$message.info('123')
+    },
+  },
   filters: {},
   computed: {},
   watch: {},

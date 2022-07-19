@@ -1,6 +1,7 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, isNavigationFailure } from 'vue-router'
 import defaultLayout from '@/layouts/default.vue'
 import routes from './routes'
+import { loadingBar } from '@/utils/createDiscreteApi'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,18 @@ const router = createRouter({
       component: () => import('../views/login.vue'),
     },
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  loadingBar.start()
+  next()
+})
+
+router.afterEach((to, from, failure) => {
+  if (isNavigationFailure(failure)) {
+    loadingBar.error()
+  }
+  loadingBar.finish()
 })
 
 export default router

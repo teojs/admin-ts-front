@@ -1,11 +1,9 @@
 <template>
-  <page-panel>
-    <template #title>user/index.vue</template>
-    <template #content>
-      user/index 页面
-      <router-view />
-    </template>
-  </page-panel>
+  <router-view v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component" />
+    </keep-alive>
+  </router-view>
 </template>
 
 <route lang="json">

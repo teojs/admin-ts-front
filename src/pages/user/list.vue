@@ -1,16 +1,12 @@
 <template>
-  <page-panel>
-    <template #title>user/user.vue</template>
-    <template #content> user/user 页面 </template>
-  </page-panel>
+  <n-scrollbar id="page" ref="page" class="page"> 用户列表 </n-scrollbar>
 </template>
 
 <route lang="json">
 {
   "meta": {
     "title": "用户列表"
-  },
-  "dynamic": true
+  }
 }
 </route>
 
@@ -34,4 +30,8 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.page {
+  padding: 10px;
+}
+</style>

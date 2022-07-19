@@ -1,11 +1,16 @@
 <template>
   component name here
+  <router-view v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component" />
+    </keep-alive>
+  </router-view>
 </template>
 
 <route lang="json">
 {
   "meta": {
-    "title": "新页面",
+    "title": "component name here",
     "sort": 1
   }
 }

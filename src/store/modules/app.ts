@@ -15,6 +15,12 @@ export default {
     ],
   } as AppState,
 
+  getters: {
+    colorScheme(state: AppState) {
+      return state.colorScheme
+    },
+  },
+
   mutations: {
     /**
      * 切换主题
