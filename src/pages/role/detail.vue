@@ -1,11 +1,11 @@
 <template>
-  role-role
+  <div>role-role</div>
 </template>
 
 <route lang="json">
 {
   "meta": {
-    "title": "新页面11",
+    "title": "角色详情",
     "sort": 1
   }
 }

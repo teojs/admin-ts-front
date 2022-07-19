@@ -1,7 +1,9 @@
 <template>
-  角色列表1
-  <input type="checkbox" >
-  <n-button @click="showMessage"> 弹框 </n-button>
+  <div>
+    角色列表1
+    <input type="checkbox" >
+    <n-button @click="$router.push('detail')"> 弹框 </n-button>
+  </div>
 </template>
 
 <route lang="json">

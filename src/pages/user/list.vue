@@ -1,5 +1,7 @@
 <template>
-  <n-scrollbar id="page" ref="page" class="page"> 用户列表 </n-scrollbar>
+  <div>
+    用户列表
+  </div>
 </template>
 
 <route lang="json">
