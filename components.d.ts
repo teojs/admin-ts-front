@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AppRouterView: typeof import('./src/components/AppRouterView.vue')['default']
     KeepAliveTabs: typeof import('./src/components/KeepAliveTabs.vue')['default']
     LoginModule: typeof import('./src/components/LoginModule.vue')['default']
     NBreadcrumb: typeof import('naive-ui')['NBreadcrumb']
