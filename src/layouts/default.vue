@@ -70,16 +70,7 @@
         </div>
       </n-layout-header>
       <n-layout-content class="content">
-        <div class="tabs">
-          <router-link
-            v-for="tab in keepAliveTabs"
-            :key="tab.key"
-            :to="tab.key"
-            class="tabs-item"
-          >
-            {{ tab.label }}
-          </router-link>
-        </div>
+        <keep-alive-tabs :tabs="keepAliveTabs" />
         <router-view v-slot="{ Component, route }">
           <keep-alive>
             <component :is="Component" :key="route.fullPath" />
@@ -167,11 +158,11 @@ export default defineComponent({
         }
       }
     },
-    addKeepAliveTab(key: string, item: MenuOption) {
-      this.$store.commit('app/addKeepAliveTab', item)
+    addKeepAliveTab(key: string, tab: MenuOption) {
+      this.$store.commit('app/addKeepAliveTab', tab)
     },
-    rmKeepAliveTab(key: string, item: MenuOption) {
-      this.$store.commit('app/rmKeepAliveTab', item)
+    rmKeepAliveTab(key: string, tab: MenuOption) {
+      this.$store.commit('app/rmKeepAliveTab', tab)
     },
   },
   computed: {
@@ -201,25 +192,6 @@ export default defineComponent({
     }
     .content {
       margin-top: 10px;
-      .tabs {
-        display: flex;
-        margin: 10px;
-        background-color: var(--bg-gray);
-        border-radius: 4px;
-        .tabs-item {
-          padding: 3px 10px;
-          border-radius: 4px;
-          margin: 5px 0 5px 5px;
-          transition: 0.3s;
-          cursor: pointer;
-          &.router-link-active {
-            background-color: var(--n-color);
-          }
-          &:hover {
-            background-color: var(--n-color);
-          }
-        }
-      }
     }
   }
   .logo {
