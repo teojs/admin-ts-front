@@ -21,7 +21,7 @@
             :icon-size="16"
             :collapsed-icon-size="16"
             :render-label="renderMenuLabel"
-            @update:value="changeMenu"
+            @update:value="addKeepAliveTab"
           />
         </n-scrollbar>
       </n-layout-sider>
@@ -72,7 +72,7 @@
       <n-layout-content class="content">
         <div class="tabs">
           <router-link
-            v-for="tab in openedMenu"
+            v-for="tab in keepAliveTabs"
             :key="tab.key"
             :to="tab.key"
             class="tabs-item"
@@ -120,12 +120,6 @@ export default defineComponent({
     collapsedMenu: false,
     menuOptions: [] as any[],
     isDark: false,
-    openedMenu: [
-      {
-        key: '/index',
-        label: '首页',
-      },
-    ] as any[],
   }),
   created() {
     this.extractMenu()
@@ -173,14 +167,15 @@ export default defineComponent({
         }
       }
     },
-    changeMenu(key: string, item: MenuOption) {
-      if (this.$_.findIndex(this.openedMenu, { key }) === -1) {
-        this.openedMenu.push(item)
-      }
+    addKeepAliveTab(key: string, item: MenuOption) {
+      this.$store.commit('app/addKeepAliveTab', item)
+    },
+    rmKeepAliveTab(key: string, item: MenuOption) {
+      this.$store.commit('app/rmKeepAliveTab', item)
     },
   },
   computed: {
-    ...mapState('app', ['colorScheme']),
+    ...mapState('app', ['colorScheme', 'keepAliveTabs']),
   },
 })
 </script>
