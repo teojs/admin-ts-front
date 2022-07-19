@@ -70,7 +70,7 @@
         </div>
       </n-layout-header>
       <n-layout-content class="content">
-        <keep-alive-tabs :tabs="keepAliveTabs" />
+        <keep-alive-tabs :tabs="keepAliveTabs" @onClose="rmKeepAliveTab" />
         <router-view v-slot="{ Component, route }">
           <keep-alive>
             <component :is="Component" :key="route.fullPath" />
@@ -161,8 +161,11 @@ export default defineComponent({
     addKeepAliveTab(key: string, tab: MenuOption) {
       this.$store.commit('app/addKeepAliveTab', tab)
     },
-    rmKeepAliveTab(key: string, tab: MenuOption) {
-      this.$store.commit('app/rmKeepAliveTab', tab)
+    rmKeepAliveTab(tab: MenuOption, isActive: boolean) {
+      this.$store.commit('app/rmKeepAliveTab', {
+        tab,
+        isActive,
+      })
     },
   },
   computed: {

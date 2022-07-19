@@ -31,14 +31,14 @@ export default {
      * 添加已打开的页面
      *
      * @param {AppState} state
-     * @param {MenuOption} menuOption
+     * @param {MenuOption} tabs
      */
-    addKeepAliveTab(state: AppState, menuOption: MenuOption) {
+    addKeepAliveTab(state: AppState, tabs: MenuOption) {
       const index = _.findIndex(state.keepAliveTabs, {
-        key: menuOption.key,
+        key: tabs.key,
       })
       if (index === -1) {
-        state.keepAliveTabs.push(menuOption)
+        state.keepAliveTabs.push(tabs)
       }
     },
 
@@ -46,11 +46,20 @@ export default {
      * 关闭已打开的页面
      *
      * @param {AppState} state
-     * @param {MenuOption} menuOption
+     * @param {{
+     *   tab: MenuOption
+     *   isActive: boolean
+     * }} payload
      */
-    rmKeepAliveTab(state: AppState, menuOption: MenuOption) {
+    rmKeepAliveTab(
+      state: AppState,
+      payload: {
+        tab: MenuOption
+        isActive: boolean
+      }
+    ) {
       const index = _.findIndex(state.keepAliveTabs, {
-        key: menuOption.key,
+        key: payload.tab.key,
       })
       if (index > -1) {
         state.keepAliveTabs.splice(index, 1)

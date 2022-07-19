@@ -3,15 +3,28 @@
     <router-link
       v-for="tab in tabs"
       :key="tab.key"
+      v-slot="{ isActive, href, navigate }"
       :to="(tab.key as string)"
-      class="tabs-item"
+      custom
     >
-      <span class="title">{{ tab.label }}</span>
-      <span class="icon-close" @click="close(tab)">
-        <n-icon>
-          <CloseOutlineIcon />
-        </n-icon>
-      </span>
+      <div class="tabs-item" :class="{ active: isActive }">
+        <a v-bind="$attrs"
+          :href="href"
+          class="title"
+          @click="navigate"
+        >
+          {{ tab.label }}
+        </a>
+        <span
+          v-if="tab.key !== '/index'"
+          class="close-button"
+          @click="close(tab, isActive)"
+        >
+          <n-icon class="icon-close">
+            <CloseOutlineIcon />
+          </n-icon>
+        </span>
+      </div>
     </router-link>
   </div>
 </template>
@@ -45,8 +58,14 @@ export default defineComponent({
   beforeUnmount() {},
   unmounted() {},
   methods: {
-    close(tab: MenuOption) {
-      this.$emit('onClose', tab)
+    close(tab: MenuOption, isActive: boolean) {
+      this.$emit('onClose', tab, isActive)
+      if (isActive) {
+        const length = this.tabs.length
+        if (length > 0) {
+          this.$router.push(this.tabs[length - 1].key as string)
+        }
+      }
     },
   },
   filters: {},
@@ -57,27 +76,38 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .tabs {
-  --border-radius: 4px;
+  --tabs-border-radius: 4px;
+  --tabs-main-bg: #ececec;
+  --tabs-main-bg-active: #ffffff;
+  --tabs-item-bg: #ececec;
+}
+[data-theme='dark'] .tabs {
+  --tabs-border-radius: 4px;
+  --tabs-main-bg: #000000;
+  --tabs-main-bg-active: #18181c;
+  --tabs-item-bg: #000000;
+}
 
+.tabs {
   height: 40px;
   display: flex;
   margin: 10px;
-  background-color: rgba(99, 226, 183, 0.2);
-  border-radius: var(--border-radius);
+  background-color: var(--tabs-main-bg);
+  border-radius: var(--tabs-border-radius);
   padding: 5px;
   .tabs-item {
     height: 30px;
-    border-radius: var(--border-radius);
+    border-radius: var(--tabs-border-radius);
     margin-right: 5px;
     transition: 0.3s;
     cursor: pointer;
     display: flex;
     align-items: center;
-    background-color: var(--bg-light-gray);
+    background-color: var(--tabs-item-bg);
     .title {
       padding: 0 10px;
     }
-    .icon-close {
+    .close-button {
       width: 30px;
       height: 30px;
       margin-left: 5px;
@@ -91,12 +121,15 @@ export default defineComponent({
         background-color: var(--bg-red);
         color: #ececec;
       }
+      .icon-close {
+        pointer-events: none;
+      }
     }
-    &.router-link-active {
-      background-color: #63e2b7;
+    &.active {
+      background-color: var(--tabs-main-bg-active);
     }
     &:hover {
-      background-color: #63e2b7;
+      background-color: var(--tabs-main-bg-active);
     }
   }
 }
