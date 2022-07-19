@@ -31,7 +31,12 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to, from, failure) => {
   if (isNavigationFailure(failure)) {
     loadingBar.error()
+    return
   }
+  const title = to.meta.title
+    ? to.meta.title + ' - 后台管理模板'
+    : '后台管理模板'
+  document.title = title
   loadingBar.finish()
 })
 
