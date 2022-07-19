@@ -1,11 +1,11 @@
 <template>
-  component name here
+  role-role
 </template>
 
 <route lang="json">
 {
   "meta": {
-    "title": "新页面",
+    "title": "新页面11",
     "sort": 1
   }
 }
@@ -15,7 +15,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'component name here',
+  name: 'role-role',
   components: {},
   data: () => ({
     test: 123,

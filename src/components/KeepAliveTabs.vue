@@ -104,19 +104,17 @@ export default defineComponent({
     display: flex;
     align-items: center;
     background-color: var(--tabs-item-bg);
+    padding: 0 5px 0 10px;
     .title {
-      padding: 0 10px;
+      margin-right: 5px;
     }
     .close-button {
-      width: 30px;
-      height: 30px;
-      margin-left: 5px;
       transition: 0.3s;
       padding: 5px;
-      border-left: 1px solid var(--bg-gray);
       display: flex;
       justify-content: center;
       align-items: center;
+      border-radius: 50%;
       &:hover {
         background-color: var(--bg-red);
         color: #ececec;

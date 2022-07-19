@@ -1,8 +1,8 @@
-import fs from 'node:fs'
 import path from 'node:path'
 import { isVue, isEmptyFile } from './src/utils'
 import initRoutes from './src/initRoutes'
 import initTemplate from './src/initTemplate'
+import { watchTree } from 'watch'
 
 interface ConfigEnv {
   mode: string
@@ -23,24 +23,19 @@ const autoRouter = (cusConfig: CusConfig) => ({
     if (command === 'serve') {
       const rootPath = path.join(process.cwd(), pagesDir)
       let timer: NodeJS.Timeout = null
-      fs.watch(
-        rootPath,
-        { recursive: true },
-        (eventType, fileName) => {
-          const filePath = path.posix.join(rootPath, fileName)
-          if (isVue(filePath)) {
-            if (isEmptyFile(filePath)) {
-              initTemplate(filePath)
-            }
+      watchTree(rootPath, function(filePath, curr, prev) {
+        if (isVue(filePath)) {
+          if (isEmptyFile(filePath)) {
+            initTemplate(filePath, 'fileName')
           }
-
-          if (eventType === 'rename') {
-            clearTimeout(timer)
-            timer = setTimeout(() => {
-              initRoutes(cusConfig)
-            }, 300)
-          }
-        })
+        }
+        if (curr !== null && prev !== null) {
+          clearTimeout(timer)
+          timer = setTimeout(() => {
+            initRoutes(cusConfig)
+          }, 300)
+        }
+      })
     }
   },
 })

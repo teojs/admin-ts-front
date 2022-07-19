@@ -72,6 +72,7 @@
       <n-layout-content class="content">
         <keep-alive-tabs :tabs="keepAliveTabs" @onClose="rmKeepAliveTab" />
         <router-view v-slot="{ Component, route }">
+          <!--  TODO: 这里默认缓存所有页面，有空要开发按需缓存 -->
           <keep-alive>
             <component :is="Component" :key="route.fullPath" />
           </keep-alive>

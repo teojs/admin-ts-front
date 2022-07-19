@@ -21,6 +21,7 @@
   "devDependencies": {
     "@types/lodash": "^4.14.182",
     "@types/node": "^18.0.3",
+    "@types/watch": "^1.0.3",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "@vicons/fa": "^0.12.0",
@@ -40,6 +41,7 @@
     "unplugin-vue-components": "^0.21.1",
     "vite": "^2.9.9",
     "vite-plugin-eslint": "^1.6.1",
-    "vue-tsc": "^0.34.7"
+    "vue-tsc": "^0.34.7",
+    "watch": "^1.0.2"
   }
 }
