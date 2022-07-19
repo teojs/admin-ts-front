@@ -29,7 +29,7 @@
     <n-layout class="main-layout">
       <n-layout-header>
         <div class="header">
-          <n-breadcrumb class="breadcrumb">
+          <!-- <n-breadcrumb class="breadcrumb">
             <n-breadcrumb-item
               v-for="route in $route.matched"
               :key="route.path"
@@ -38,7 +38,8 @@
                 {{ route.meta.title }}
               </router-link>
             </n-breadcrumb-item>
-          </n-breadcrumb>
+          </n-breadcrumb> -->
+          <keep-alive-tabs :tabs="keepAliveTabs" @onClose="rmKeepAliveTab" />
           <n-space class="right">
             <n-switch :default-value="isDark" @update:value="changeTheme">
               <template #checked-icon>
@@ -70,13 +71,7 @@
         </div>
       </n-layout-header>
       <n-layout-content class="content">
-        <keep-alive-tabs :tabs="keepAliveTabs" @onClose="rmKeepAliveTab" />
-        <router-view v-slot="{ Component, route }">
-          <!--  TODO: 这里默认缓存所有页面，有空要开发按需缓存 -->
-          <keep-alive>
-            <component :is="Component" :key="route.fullPath" />
-          </keep-alive>
-        </router-view>
+        <app-router-view />
       </n-layout-content>
     </n-layout>
   </n-layout>
@@ -192,10 +187,13 @@ export default defineComponent({
         display: flex;
         justify-content: space-between;
         align-items: center;
+        flex-shrink: 0;
+        margin-left: 20px;
       }
     }
     .content {
       margin-top: 10px;
+      position: relative;
     }
   }
   .logo {
