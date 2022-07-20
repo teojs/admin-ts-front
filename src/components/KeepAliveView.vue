@@ -2,7 +2,7 @@
   <router-view v-slot="{ Component, route }">
     <transition name="route-transform" mode="out-in">
       <keep-alive>
-        <component :is="Component" :key="route.fullPath"/>
+        <component :is="Component" :key="route.fullPath" />
       </keep-alive>
     </transition>
   </router-view>
@@ -12,6 +12,7 @@
 /* route-transform */
 .route-transform-leave-active,
 .route-transform-enter-active {
+  width: 100%;
   position: absolute !important;
   transition: all 0.2s;
 }

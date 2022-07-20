@@ -1,32 +1,30 @@
 <template>
   <n-scrollbar x-scrollable>
-    <div class="tabs">
+    <transition-group name="tab-transform"
+      tag="div"
+      class="tabs"
+    >
       <router-link
         v-for="(tab, i) in tabs"
         :key="tab.key"
-        v-slot="{ isActive, navigate }"
+        v-slot="{ isActive }"
         :to="(tab.key as string)"
-        custom
+        class="tabs-item"
       >
-        <div class="tabs-item"
-          :class="{ active: isActive }"
-          @click="navigate"
+        <span class="title">
+          {{ tab.label }}
+        </span>
+        <span
+          v-if="i !== 0"
+          class="close-button"
+          @click.prevent.self="close(tab, isActive)"
         >
-          <span class="title">
-            {{ tab.label }}
-          </span>
-          <span
-            v-if="i !== 0"
-            class="close-button"
-            @click.prevent.self="close(tab, isActive)"
-          >
-            <n-icon class="icon-close">
-              <CloseOutlineIcon />
-            </n-icon>
-          </span>
-        </div>
+          <n-icon class="icon-close">
+            <CloseOutlineIcon />
+          </n-icon>
+        </span>
       </router-link>
-    </div>
+    </transition-group>
   </n-scrollbar>
 </template>
 
@@ -87,31 +85,42 @@ export default defineComponent({
   --tabs-border-radius: 4px;
   --tabs-main-bg: #000000;
   --tabs-main-bg-active: #233633;
-  --tabs-main-font-active: #ffffff;
+  --tabs-main-font-active: #63e2b7;
   --tabs-item-bg: #000000;
+}
+
+.tab-transform-enter-from,
+.tab-transform-leave-to {
+  opacity: 0;
+  transform: translateY(100%);
+}
+.tab-transform-leave-active {
+  position: absolute;
 }
 
 .tabs {
   height: 40px;
-  display: flex;
   border-radius: var(--tabs-border-radius);
   padding: 5px;
+  position: relative;
+  white-space: nowrap;
   .tabs-item {
     height: 30px;
     border-radius: var(--tabs-border-radius);
     margin-right: 5px;
-    transition: background-color 0.3s;
+    transition: transform, background-color, 0.3s ease;
     cursor: pointer;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     padding: 0 5px 0 10px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
     .title {
       margin-right: 5px;
-      transition: color 0.3s;
       white-space: nowrap;
     }
     .close-button {
-      transition: 0.3s;
+      transition: background-color 0.3s;
       padding: 5px;
       display: flex;
       justify-content: center;
@@ -125,7 +134,7 @@ export default defineComponent({
         pointer-events: none;
       }
     }
-    &.active {
+    &.router-link-active {
       background-color: var(--tabs-main-bg-active);
       color: var(--tabs-main-font-active);
     }

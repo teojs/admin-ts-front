@@ -29,16 +29,6 @@
     <n-layout class="main-layout">
       <n-layout-header>
         <div class="header">
-          <!-- <n-breadcrumb class="breadcrumb">
-            <n-breadcrumb-item
-              v-for="route in $route.matched"
-              :key="route.path"
-            >
-              <router-link :to="route.path">
-                {{ route.meta.title }}
-              </router-link>
-            </n-breadcrumb-item>
-          </n-breadcrumb> -->
           <keep-alive-tabs :tabs="keepAliveTabs" @onClose="rmKeepAliveTab" />
           <n-space class="right">
             <n-switch :default-value="isDark" @update:value="changeTheme">
@@ -74,6 +64,16 @@
         <transition name="route-transform" mode="out-in">
           <keep-alive>
             <n-layout-content :key="route.fullPath" class="content">
+              <n-breadcrumb class="breadcrumb">
+                <n-breadcrumb-item
+                  v-for="route in $route.matched"
+                  :key="route.path"
+                >
+                  <router-link :to="route.path">
+                    {{ route.meta.title }}
+                  </router-link>
+                </n-breadcrumb-item>
+              </n-breadcrumb>
               <component :is="Component" />
             </n-layout-content>
           </keep-alive>
@@ -181,18 +181,16 @@ export default defineComponent({
 .route-transform-leave-active,
 .route-transform-enter-active {
   width: 100%;
-  position: absolute !important;
-  transition: all 0.2s;
+  position: absolute;
+  transition: all 0.2s ease;
 }
 .route-transform-enter-from {
   opacity: 0;
   transform: translateY(30px);
-  // transition: all 0.2s;
 }
 .route-transform-leave-to {
   opacity: 0;
   transform: translateY(30px);
-  // transition: all 0.2s;
 }
 
 .home {
@@ -218,6 +216,9 @@ export default defineComponent({
     }
     .content {
       margin-top: 10px;
+      .breadcrumb {
+        padding: 10px;
+      }
     }
   }
   .logo {
