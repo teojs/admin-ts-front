@@ -41,12 +41,13 @@ export function mergePath(...paths: string[]): string {
  */
 export function firstUpperCase(word: string): string {
   if (!word) return ''
-  word = word.replace(/_|\./g, '')
+  word = word.replace(/_|\.|\//g, '')
   const [a, ...z]: string[] = word.split('')
   return a.toUpperCase() + z.join('')
 }
 
 export function getVarName($1: string, $2: string): string {
+  console.log($1, $2)
   return firstUpperCase($1) + firstUpperCase($2)
 }
 
