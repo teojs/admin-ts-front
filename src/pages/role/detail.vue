@@ -1,11 +1,14 @@
 <template>
-  <div>role-role</div>
+  <div>
+    role-role12223
+    <input type="checkbox" >
+  </div>
 </template>
 
 <route lang="json">
 {
   "meta": {
-    "title": "角色详情",
+    "title": "角色详情1",
     "sort": 1
   }
 }

@@ -38,18 +38,14 @@ interface CusConfig {
   routerDir: string
 }
 
-export default async function initRoutes(
-  cusConfig: CusConfig
-) {
-  console.log('==正在初始化路由...')
-  console.time('==初始化路由耗时：')
-
-  let routeImport: string = '// !!!此文件是自动生成的，请勿修改和提交到Git上!!! \n'
+export default async function initRoutes(cusConfig: CusConfig) {
+  let routeImport: string =
+    '// !!!此文件是自动生成的，请勿修改和提交到Git上!!! \n'
 
   // 获取全部vue文件并格式化结构关系
   const files = readAllFileSync(cusConfig.pagesDir)
   const dirStructure: DirStructure = {}
-  files.forEach(file => {
+  files.forEach((file) => {
     const regExp = new RegExp(`${cusConfig.pagesDir}/(.+?).vue`)
     const key = file.match(regExp)[1].replace(/\//g, '.')
     _.set(dirStructure, key, {
@@ -67,12 +63,7 @@ export default async function initRoutes(
   ) => {
     if (!file.filePath && !file.index) {
       for (const key in file) {
-        createRoute(
-          routes,
-          file[key],
-          key,
-          mergePath(parentKey, fileName)
-        )
+        createRoute(routes, file[key], key, mergePath(parentKey, fileName))
       }
       return
     }
@@ -145,18 +136,14 @@ export default async function initRoutes(
     text: routeFile,
     ...formatConfig,
   })
-  const routesFile = mergePath(
-    process.cwd(),
-    cusConfig.routerDir,
-    'routes.ts'
-  )
-  fs.writeFileSync(
-    routesFile,
-    formatFile
-  )
-  console.log(
-    '==路由初始化完毕，文件位置：',
-    routesFile
-  )
-  console.timeEnd('==初始化路由耗时：')
+  const routesFile = mergePath(process.cwd(), cusConfig.routerDir, 'routes.ts')
+  const routesFileContent = fs.readFileSync(routesFile, {
+    encoding: 'utf-8',
+  })
+
+  if (routesFileContent === formatFile) {
+    return
+  }
+
+  fs.writeFileSync(routesFile, formatFile)
 }

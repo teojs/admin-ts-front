@@ -70,9 +70,15 @@
           </n-space>
         </div>
       </n-layout-header>
-      <n-layout-content class="content">
-        <app-router-view />
-      </n-layout-content>
+      <router-view v-slot="{ Component, route }">
+        <transition name="route-transform" mode="out-in">
+          <keep-alive>
+            <n-layout-content :key="route.fullPath" class="content">
+              <component :is="Component" />
+            </n-layout-content>
+          </keep-alive>
+        </transition>
+      </router-view>
     </n-layout>
   </n-layout>
 </template>
@@ -171,12 +177,31 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
+/* route-transform */
+.route-transform-leave-active,
+.route-transform-enter-active {
+  width: 100%;
+  position: absolute !important;
+  transition: all 0.2s;
+}
+.route-transform-enter-from {
+  opacity: 0;
+  transform: translateY(30px);
+  // transition: all 0.2s;
+}
+.route-transform-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+  // transition: all 0.2s;
+}
+
 .home {
   height: 100vh;
   padding: 10px;
   background-color: transparent !important;
   .main-layout {
     background-color: transparent !important;
+    position: relative;
     .header {
       height: 100%;
       display: flex;
@@ -193,7 +218,6 @@ export default defineComponent({
     }
     .content {
       margin-top: 10px;
-      position: relative;
     }
   }
   .logo {

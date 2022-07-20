@@ -1,5 +1,6 @@
 <template>
-  <app-router-view />
+  <input type="checkbox" >
+  <keep-alive-view />
 </template>
 
 <route lang="json">
@@ -17,7 +18,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   components: {},
   data: () => ({
-    test: 123,
+    test: 1231,
   }),
   beforeCreate() {},
   created() {},

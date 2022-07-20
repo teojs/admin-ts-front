@@ -28,15 +28,21 @@ export default defineConfig({
       throwOnError: true,
       throwOnWarning: true,
     }),
-    autoRouter({
-      pagesDir: 'src/pages',
-      layoutsDir: 'src/layouts',
-      routerDir: 'src/router',
-    }),
-    autoApi({
-      serviceDir: 'src/service',
-      apisDir: 'src/service/apis',
-    }),
+    {
+      ...autoRouter({
+        pagesDir: 'src/pages',
+        layoutsDir: 'src/layouts',
+        routerDir: 'src/router',
+      }),
+      enforce: 'pre',
+    },
+    {
+      ...autoApi({
+        serviceDir: 'src/service',
+        apisDir: 'src/service/apis',
+      }),
+      enforce: 'pre',
+    },
     Components({
       resolvers: [NaiveUiResolver()],
     }),
@@ -52,7 +58,7 @@ export default defineConfig({
       '/api': {
         target: servers[proxyTarget],
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },

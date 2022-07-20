@@ -1,5 +1,5 @@
 <template>
-  <app-router-view />
+  <keep-alive-view />
 </template>
 
 <route lang="json">
