@@ -8,5 +8,6 @@ declare module 'vue-router' {
     requiresAuth?: boolean
     icon?: string
     keepAlive?: boolean
+    isMenu?: boolean
   }
 }

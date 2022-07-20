@@ -1,14 +1,17 @@
 <template>
-  <keep-alive-view />
+  <page-panel>
+    <template #title>index.vue</template>
+    <template #content>index 页面</template>
+  </page-panel>
 </template>
 
 <route lang="json">
 {
   "meta": {
-    "title": "用户管理",
+    "title": "权限管理",
     "sort": 2
   },
-  "dynamic": true
+  "redirect": "/permission/role"
 }
 </route>
 

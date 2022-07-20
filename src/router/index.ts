@@ -11,6 +11,7 @@ const router = createRouter({
       name: 'home',
       component: defaultLayout,
       children: routes,
+      redirect: '/index',
       meta: {
         title: '后台管理',
       },

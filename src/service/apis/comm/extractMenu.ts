@@ -53,7 +53,7 @@ export default function api(ctx: IRequestConfig): MenuOption[] {
           meta: o.meta,
         }
         children.push(menuOption)
-        if (o.children) {
+        if (o.children && o.children.every((o) => !o.meta?.hidden)) {
           menuOption.children = []
           getMenuOption(o.children, menuOption.children)
         }

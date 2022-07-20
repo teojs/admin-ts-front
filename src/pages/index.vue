@@ -9,9 +9,9 @@
 {
   "meta": {
     "title": "首页",
-    "sort": 1
-  },
-  "dynamic": true
+    "sort": 1,
+    "isMenu": true
+  }
 }
 </route>
 

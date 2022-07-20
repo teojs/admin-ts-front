@@ -1,13 +1,15 @@
 <template>
-  <div>
-    用户列表
-  </div>
+  角色列表
+  <input type="checkbox" >
+  <keep-alive-view />
 </template>
 
 <route lang="json">
 {
   "meta": {
-    "title": "用户列表"
+    "title": "角色管理",
+    "sort": 1,
+    "isMenu": true
   }
 }
 </route>
@@ -17,6 +19,9 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   components: {},
+  data: () => ({
+    test: 1231,
+  }),
   beforeCreate() {},
   created() {},
   beforeMount() {},
@@ -32,8 +37,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped>
-.page {
-  padding: 10px;
-}
-</style>
+<style lang="less" scoped></style>

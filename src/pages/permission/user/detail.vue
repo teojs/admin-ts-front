@@ -1,16 +1,12 @@
 <template>
-  <div>
-    角色列表1
-    <input type="checkbox" >
-    <n-button @click="$router.push('detail')"> 弹框 </n-button>
-  </div>
+  <div>用户列表</div>
 </template>
 
 <route lang="json">
 {
   "meta": {
-    "title": "角色列表",
-    "sort": 1
+    "title": "用户列表",
+    "hidden": true
   }
 }
 </route>
@@ -20,9 +16,6 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   components: {},
-  data: () => ({
-    user: 1,
-  }),
   beforeCreate() {},
   created() {},
   beforeMount() {},
@@ -31,15 +24,15 @@ export default defineComponent({
   updated() {},
   beforeUnmount() {},
   unmounted() {},
-  methods: {
-    showMessage() {
-      this.$message.info('123')
-    },
-  },
+  methods: {},
   filters: {},
   computed: {},
   watch: {},
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.page {
+  padding: 10px;
+}
+</style>

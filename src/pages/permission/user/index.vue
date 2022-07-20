@@ -1,15 +1,14 @@
 <template>
-  <div>
-    role-role12223
-    <input type="checkbox" >
-  </div>
+  用户列表
+  <keep-alive-view />
 </template>
 
 <route lang="json">
 {
   "meta": {
-    "title": "角色详情1",
-    "sort": 1
+    "title": "用户管理",
+    "sort": 2,
+    "isMenu": true
   }
 }
 </route>
@@ -18,11 +17,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'role-role',
   components: {},
-  data: () => ({
-    test: 123,
-  }),
   beforeCreate() {},
   created() {},
   beforeMount() {},
