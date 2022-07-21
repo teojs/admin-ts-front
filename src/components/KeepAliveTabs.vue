@@ -6,9 +6,9 @@
     >
       <router-link
         v-for="(tab, i) in tabs"
-        :key="tab.fullPath"
+        :key="tab.path"
         v-slot="{ isActive }"
-        :to="(tab.fullPath as string)"
+        :to="(tab.path as string)"
         class="tabs-item"
       >
         <span class="title">

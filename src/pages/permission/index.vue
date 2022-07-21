@@ -6,7 +6,8 @@
 {
   "meta": {
     "title": "权限管理",
-    "sort": 2
+    "sort": 2,
+    "isMenu": true
   },
   "redirect": "/permission/role/list"
 }
@@ -17,9 +18,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   components: {},
-  activated() {
-    console.log(2)
-  },
+  activated() {},
   beforeCreate() {},
   created() {},
   beforeMount() {},

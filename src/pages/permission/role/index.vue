@@ -19,9 +19,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   components: {},
   data: () => ({}),
-  activated() {
-    console.log(1)
-  },
+  activated() {},
   beforeCreate() {},
   created() {},
   beforeMount() {},

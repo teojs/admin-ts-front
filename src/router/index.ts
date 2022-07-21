@@ -37,18 +37,17 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.keepAlive) {
+  loadingBar.start()
+
+  const isMenuMatched = _.findLast(to.matched, (o) => !!o.meta.isMenu)
+  if (isMenuMatched) {
     const keepAliveTabs: KeepAliveTab[] = store.getters['app/keepAliveTabs']
-    const existIndex = _.find(keepAliveTabs, { path: to.path })
+    const existIndex = _.find(keepAliveTabs, { path: isMenuMatched.path })
     if (!existIndex) {
       store.commit('app/addKeepAliveTab', {
-        path: to.path,
-        fullPath: to.fullPath,
-        title: to.meta.title,
-        query: to.query,
+        path: isMenuMatched.path,
+        title: isMenuMatched.meta.title,
       } as KeepAliveTab)
-
-      loadingBar.start()
     }
   }
   next()

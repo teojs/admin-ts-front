@@ -9,8 +9,7 @@
 {
   "meta": {
     "title": "角色详情",
-    "hidden": true,
-    "keepAlive": true
+    "hidden": true
   }
 }
 </route>

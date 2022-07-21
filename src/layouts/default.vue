@@ -155,11 +155,9 @@ export default defineComponent({
     },
     getCurrentMenu() {
       const matched = this.$route.matched
-      for (let i = 0; i < matched.length; i++) {
-        const isMenu = matched[i].meta.isMenu
-        if (isMenu) {
-          return matched[i].path
-        }
+      const isMenuItem = this.$_.findLast(matched, (o) => !!o.meta.isMenu)
+      if (isMenuItem) {
+        return isMenuItem.path
       }
     },
 
