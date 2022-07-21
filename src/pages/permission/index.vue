@@ -1,8 +1,5 @@
 <template>
-  <page-panel>
-    <template #title>index.vue</template>
-    <template #content>index 页面</template>
-  </page-panel>
+  <keep-alive-view />
 </template>
 
 <route lang="json">
@@ -11,7 +8,7 @@
     "title": "权限管理",
     "sort": 2
   },
-  "redirect": "/permission/role"
+  "redirect": "/permission/role/list"
 }
 </route>
 
@@ -20,6 +17,9 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   components: {},
+  activated() {
+    console.log(2)
+  },
   beforeCreate() {},
   created() {},
   beforeMount() {},

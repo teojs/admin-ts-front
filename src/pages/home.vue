@@ -1,15 +1,18 @@
 <template>
-  <keep-alive-view />
+  <div class="page">
+    <h1>欢迎使用</h1>
+    <p>后台管理系统</p>
+  </div>
 </template>
 
 <route lang="json">
 {
   "meta": {
-    "title": "角色管理",
+    "title": "首页",
     "sort": 1,
-    "isMenu": true
-  },
-  "redirect": "/permission/role/list"
+    "isMenu": true,
+    "keepAlive": true
+  }
 }
 </route>
 
@@ -18,10 +21,6 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   components: {},
-  data: () => ({}),
-  activated() {
-    console.log(1)
-  },
   beforeCreate() {},
   created() {},
   beforeMount() {},
@@ -37,4 +36,19 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: var(--font-light-gray);
+  h1 {
+    font-size: 100px;
+    margin: 0;
+  }
+  p {
+    font-size: 40px;
+  }
+}
+</style>

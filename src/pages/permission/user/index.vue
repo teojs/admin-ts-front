@@ -1,5 +1,4 @@
 <template>
-  用户列表
   <keep-alive-view />
 </template>
 
@@ -9,7 +8,8 @@
     "title": "用户管理",
     "sort": 2,
     "isMenu": true
-  }
+  },
+  "redirect": "/permission/user/list"
 }
 </route>
 

@@ -137,9 +137,15 @@ export default async function initRoutes(cusConfig: CusConfig) {
     ...formatConfig,
   })
   const routesFile = mergePath(process.cwd(), cusConfig.routerDir, 'routes.ts')
-  const routesFileContent = fs.readFileSync(routesFile, {
-    encoding: 'utf-8',
-  })
+
+  let routesFileContent = ''
+  try {
+    routesFileContent = fs.readFileSync(routesFile, {
+      encoding: 'utf-8',
+    })
+  } catch (error) {
+    routesFileContent = ''
+  }
 
   if (routesFileContent === formatFile) {
     return

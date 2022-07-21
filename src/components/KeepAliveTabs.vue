@@ -6,13 +6,13 @@
     >
       <router-link
         v-for="(tab, i) in tabs"
-        :key="tab.key"
+        :key="tab.fullPath"
         v-slot="{ isActive }"
-        :to="(tab.key as string)"
+        :to="(tab.fullPath as string)"
         class="tabs-item"
       >
         <span class="title">
-          {{ tab.label }}
+          {{ tab.title }}
         </span>
         <span
           v-if="i !== 0"
@@ -30,8 +30,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import type { MenuOption } from 'naive-ui'
 import { CloseOutline as CloseOutlineIcon } from '@vicons/ionicons5'
+import type { KeepAliveTab } from '@/types/store/app'
 
 export default defineComponent({
   components: {
@@ -39,7 +39,7 @@ export default defineComponent({
   },
   props: {
     tabs: {
-      type: Array as PropType<MenuOption[]>,
+      type: Array as PropType<KeepAliveTab[]>,
       default: () => [],
       requested: true,
     },
@@ -57,12 +57,12 @@ export default defineComponent({
   beforeUnmount() {},
   unmounted() {},
   methods: {
-    close(tab: MenuOption, isActive: boolean) {
+    close(tab: KeepAliveTab, isActive: boolean) {
       this.$emit('onClose', tab, isActive)
       if (isActive) {
         const length = this.tabs.length
         if (length > 0) {
-          this.$router.push(this.tabs[length - 1].key as string)
+          this.$router.push(this.tabs[length - 1].path as string)
         }
       }
     },
@@ -75,14 +75,13 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .tabs {
-  --tabs-border-radius: 4px;
-  --tabs-main-bg: #ececec;
+  --tabs-border-radius: 99px;
+  --tabs-main-bg: #f3f3f3;
   --tabs-main-bg-active: #4dcfa3;
   --tabs-main-font-active: #ffffff;
   --tabs-item-bg: #ececec;
 }
 [data-theme='dark'] .tabs {
-  --tabs-border-radius: 4px;
   --tabs-main-bg: #000000;
   --tabs-main-bg-active: #233633;
   --tabs-main-font-active: #63e2b7;
@@ -99,20 +98,20 @@ export default defineComponent({
 }
 
 .tabs {
-  height: 40px;
+  height: 30px;
   border-radius: var(--tabs-border-radius);
-  padding: 5px;
   position: relative;
   white-space: nowrap;
+  background-color: var(--tabs-main-bg);
   .tabs-item {
     height: 30px;
     border-radius: var(--tabs-border-radius);
-    margin-right: 5px;
+    margin-right: 2px;
     transition: transform, background-color, 0.3s ease;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    padding: 0 5px 0 10px;
+    padding: 0 10px 0 15px;
     flex-wrap: nowrap;
     white-space: nowrap;
     .title {

@@ -21,15 +21,25 @@
             :icon-size="16"
             :collapsed-icon-size="16"
             :render-label="renderMenuLabel"
-            @update:value="addKeepAliveTab"
           />
         </n-scrollbar>
       </n-layout-sider>
     </n-config-provider>
     <n-layout class="main-layout">
-      <n-layout-header>
-        <div class="header">
-          <keep-alive-tabs :tabs="keepAliveTabs" @onClose="rmKeepAliveTab" />
+      <n-layout-header class="header">
+        <div class="topbar">
+          <div class="left">
+            <n-breadcrumb class="breadcrumb">
+              <n-breadcrumb-item
+                v-for="route in $route.matched"
+                :key="route.path"
+              >
+                <router-link :to="route.path">
+                  {{ route.meta.title }}
+                </router-link>
+              </n-breadcrumb-item>
+            </n-breadcrumb>
+          </div>
           <n-space class="right">
             <n-switch :default-value="isDark" @update:value="changeTheme">
               <template #checked-icon>
@@ -59,21 +69,12 @@
             </n-dropdown>
           </n-space>
         </div>
+        <keep-alive-tabs :tabs="keepAliveTabs" @onClose="rmKeepAliveTab" />
       </n-layout-header>
       <router-view v-slot="{ Component, route }">
         <transition name="route-transform" mode="out-in">
           <keep-alive>
             <n-layout-content :key="route.fullPath" class="content">
-              <n-breadcrumb class="breadcrumb">
-                <n-breadcrumb-item
-                  v-for="route in $route.matched"
-                  :key="route.path"
-                >
-                  <router-link :to="route.path">
-                    {{ route.meta.title }}
-                  </router-link>
-                </n-breadcrumb-item>
-              </n-breadcrumb>
               <component :is="Component" />
             </n-layout-content>
           </keep-alive>
@@ -94,6 +95,7 @@ import {
   Sun as SunIcon,
 } from '@vicons/fa'
 import { mapState } from 'vuex'
+import type { KeepAliveTab } from '@/types/store/app'
 
 export default defineComponent({
   name: 'DefaultLayouts',
@@ -160,10 +162,8 @@ export default defineComponent({
         }
       }
     },
-    addKeepAliveTab(key: string, tab: MenuOption) {
-      this.$store.commit('app/addKeepAliveTab', tab)
-    },
-    rmKeepAliveTab(tab: MenuOption, isActive: boolean) {
+
+    rmKeepAliveTab(tab: KeepAliveTab, isActive: boolean) {
       this.$store.commit('app/rmKeepAliveTab', {
         tab,
         isActive,
@@ -201,17 +201,19 @@ export default defineComponent({
     background-color: transparent !important;
     position: relative;
     .header {
-      height: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 10px;
-      .right {
+      padding: 5px;
+      .topbar {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        flex-shrink: 0;
-        margin-left: 20px;
+        margin-bottom: 5px;
+        .right {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-shrink: 0;
+          margin-left: 20px;
+        }
       }
     }
     .content {

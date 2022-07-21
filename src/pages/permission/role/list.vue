@@ -1,15 +1,19 @@
 <template>
-  <keep-alive-view />
+  <div class="page">
+    角色列表
+    <input type="text">
+    <router-link to="detail?id=1"> 去详情1 </router-link>
+    <router-link to="detail?id=2"> 去详情2 </router-link>
+  </div>
 </template>
 
 <route lang="json">
 {
   "meta": {
-    "title": "角色管理",
+    "title": "角色列表",
     "sort": 1,
-    "isMenu": true
-  },
-  "redirect": "/permission/role/list"
+    "keepAlive": true
+  }
 }
 </route>
 
@@ -17,11 +21,15 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+  name: 'permission-role-list',
   components: {},
-  data: () => ({}),
+  data: () => ({
+    test: 123,
+  }),
   activated() {
     console.log(1)
   },
+  deactivated() {},
   beforeCreate() {},
   created() {},
   beforeMount() {},

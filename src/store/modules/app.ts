@@ -1,23 +1,25 @@
-import { AppState } from '@/types/store/app'
+import { AppState, KeepAliveTab } from '@/types/store/app'
 import _ from 'lodash'
-import type { MenuOption } from 'naive-ui'
 
 export default {
   namespaced: true,
 
   state: {
     colorScheme: 'light',
-    keepAliveTabs: [
-      {
-        key: '/index',
-        label: '首页',
-      },
-    ],
+    keepAliveTabs: [{
+      title: '首页',
+      fullPath: '/home',
+      path: '/home',
+      name: 'home',
+    }],
   } as AppState,
 
   getters: {
     colorScheme(state: AppState) {
       return state.colorScheme
+    },
+    keepAliveTabs(state: AppState) {
+      return state.keepAliveTabs
     },
   },
 
@@ -39,13 +41,8 @@ export default {
      * @param {AppState} state
      * @param {MenuOption} tabs
      */
-    addKeepAliveTab(state: AppState, tabs: MenuOption) {
-      const index = _.findIndex(state.keepAliveTabs, {
-        key: tabs.key,
-      })
-      if (index === -1) {
-        state.keepAliveTabs.push(tabs)
-      }
+    addKeepAliveTab(state: AppState, tabs: KeepAliveTab) {
+      state.keepAliveTabs.push(tabs)
     },
 
     /**
@@ -53,19 +50,19 @@ export default {
      *
      * @param {AppState} state
      * @param {{
-     *   tab: MenuOption
+     *   tab: KeepAliveTab
      *   isActive: boolean
      * }} payload
      */
     rmKeepAliveTab(
       state: AppState,
       payload: {
-        tab: MenuOption
+        tab: KeepAliveTab
         isActive: boolean
       }
     ) {
       const index = _.findIndex(state.keepAliveTabs, {
-        key: payload.tab.key,
+        path: payload.tab.path,
       })
       if (index > -1) {
         state.keepAliveTabs.splice(index, 1)

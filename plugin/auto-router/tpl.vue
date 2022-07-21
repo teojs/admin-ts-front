@@ -26,6 +26,8 @@ export default defineComponent({
     test: 123,
   }),
   beforeCreate() {},
+  activated() {},
+  deactivated() {},
   created() {},
   beforeMount() {},
   mounted() {},

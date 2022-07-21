@@ -1,6 +1,6 @@
 <template>
   <div>
-    role-role12223
+    <input type="text" >
     <input type="checkbox" >
   </div>
 </template>
@@ -9,7 +9,8 @@
 {
   "meta": {
     "title": "角色详情",
-    "hidden": true
+    "hidden": true,
+    "keepAlive": true
   }
 }
 </route>
