@@ -18,4 +18,7 @@ declare module '@vue/runtime-core' {
     $dialog: typeof dialog
     $loadingBar: typeof loadingBar
   }
+  interface GlobalComponents {
+    Former: typeof import('@/components/Former.vue')['default']
+  }
 }

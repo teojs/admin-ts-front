@@ -1,9 +1,7 @@
 <template>
   <div class="page">
     角色列表
-    <input type="text" >
-    <router-link to="detail?id=1"> 去详情1 </router-link>
-    <router-link to="detail?id=2"> 去详情2 </router-link>
+    <former :form-data="formData" />
   </div>
 </template>
 
@@ -19,12 +17,34 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import type { FormDataModel } from '@/types/former'
 
 export default defineComponent({
   name: 'permission-role-list',
   components: {},
   data: () => ({
-    test: 123,
+    formDataDemo: {
+      name: 1,
+      info: [
+        {
+          name: 1,
+          cellphone: 1,
+        },
+      ],
+    },
+    formData: {
+      baseInfo: {
+        label: '基本信息',
+        type: 'input',
+        value: '',
+        placeholder: '1',
+        rule: [
+          {
+            message: '1',
+          },
+        ],
+      },
+    } as FormDataModel,
   }),
   activated() {},
   deactivated() {},
