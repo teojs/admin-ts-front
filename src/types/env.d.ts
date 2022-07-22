@@ -6,6 +6,10 @@ declare module '*.vue' {
   export default component
 }
 
+declare module '@/router/routes' {
+  export default []
+}
+
 interface WWLoginConfig {
   id: string
   appid: string
