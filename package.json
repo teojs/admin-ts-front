@@ -30,7 +30,7 @@
     "@vicons/fa": "^0.12.0",
     "@vicons/ionicons5": "^0.12.0",
     "@vitejs/plugin-vue": "^2.3.3",
-    "@vue/eslint-config-standard": "^7.0.0",
+    "@vue/eslint-config-standard": "^8.0.0",
     "eslint": "^8.19.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.2.4",
@@ -45,6 +45,7 @@
     "unplugin-vue-components": "^0.21.1",
     "vite": "^2.9.9",
     "vite-plugin-eslint": "^1.6.1",
+    "vite-plugin-mock": "^2.9.6",
     "vue-tsc": "^0.34.7"
   }
 }

@@ -4,7 +4,7 @@ import type { AxiosRequestConfig } from 'axios'
 
 // 定义请求入参，?号表示可选
 interface IRequestConfig extends AxiosRequestConfig {
-  params: {
+  params?: {
     test: number
   }
   data?: {
@@ -14,8 +14,24 @@ interface IRequestConfig extends AxiosRequestConfig {
 
 // 定义返回的数据结构，body里的内容
 interface IAxiosResponseDataBody {
-  userName: string
-  cellPhone: string
+  list: {
+    id: number
+    number: string
+    name: string
+    isHaveFullTime: boolean
+    region1: string
+    region2: string
+    region3: string
+    channel1: string
+    channel2: string
+    channel3: string
+    dealerName: string
+    createdBy: string
+    updatedBy: string
+    coopStatus: number
+  }[]
+  page: number
+  total: number
 }
 
 /**
@@ -30,7 +46,7 @@ export default function api(
 ): Promise<IAxiosResponseData<IAxiosResponseDataBody>> {
   return http<IAxiosResponseDataBody>({
     method: 'get',
-    url: '/api/',
+    url: '/api/getMainList',
     ...ctx,
   })
 }

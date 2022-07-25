@@ -1,3 +1,5 @@
+const path = require('node:path')
+const createAliasSetting = require('@vue/eslint-config-standard/createAliasSetting')
 module.exports = {
   root: true,
   env: {
@@ -13,6 +15,11 @@ module.exports = {
   plugins: ['vue', '@typescript-eslint'],
   globals: {
     NodeJS: true,
+  },
+  settings: {
+    ...createAliasSetting({
+      '@': `${path.resolve(__dirname, './src')}`,
+    }),
   },
   rules: {
     'no-console': 1,

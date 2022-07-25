@@ -1,11 +1,13 @@
 import path from 'path'
 import { defineConfig } from 'vite'
+import type { UserConfigExport, ConfigEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import eslint from 'vite-plugin-eslint'
 import autoRouter from './plugin/auto-router'
 import autoApi from './plugin/auto-api'
 import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
+import { viteMockServe } from 'vite-plugin-mock'
 
 interface Servers {
   [propName: string]: string
@@ -19,7 +21,7 @@ const proxyTarget = process.env.npm_config_api || 'test'
 const basePath = process.env.npm_config_base || '/'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default ({ command }: ConfigEnv): UserConfigExport => defineConfig({
   base: basePath,
   plugins: [
     vue(),
@@ -43,6 +45,10 @@ export default defineConfig({
       }),
       enforce: 'pre',
     },
+    viteMockServe({
+      mockPath: 'src/service/mock',
+      localEnabled: command === 'serve',
+    }),
     Components({
       resolvers: [NaiveUiResolver()],
     }),

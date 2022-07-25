@@ -180,7 +180,7 @@ export default defineComponent({
 .route-transform-enter-active {
   width: 100%;
   position: absolute;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 .route-transform-enter-from {
   opacity: 0;

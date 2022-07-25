@@ -1,4 +1,4 @@
-import http from './axios.config'
+import http from './axiosConfig'
 import _ from 'lodash'
 import { App } from 'vue'
 
