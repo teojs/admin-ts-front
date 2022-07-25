@@ -165,7 +165,7 @@
 <script lang="ts">
 import type { PropType } from 'vue'
 import { useMessage } from 'naive-ui'
-import type { FormDataModel, FormDataModelItem } from '@/types/former'
+import type { FormDataModelItem } from '@/types/former'
 export default {
   components: {},
   setup() {
@@ -180,7 +180,7 @@ export default {
   },
   props: {
     data: {
-      type: Object as PropType<FormDataModelItem<FormDataModel>>,
+      type: Object as PropType<FormDataModelItem>,
       default() {
         return {}
       },

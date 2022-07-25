@@ -4,71 +4,70 @@
       class="former"
       :model="formData"
     >
-      <n-card
-        v-for="(itemValue, itemKey) in formData"
-        :key="itemKey"
-        :title="itemValue.label"
+      <n-grid :cols="cols"
+        responsive="self"
+        :x-gap="20"
       >
-        <n-grid :cols="cols"
-          responsive="screen"
-          :x-gap="24"
-        >
-          <template
-            v-for="(fieldValue, field) in itemValue.fields"
-            :key="field"
+        <template v-for="(item, key) in formData" :key="key">
+          <!-- array -->
+          <n-gi v-if="item.type === 'array'" :span="24">
+            <n-h4 prefix="bar">
+              <n-text type="primary">{{ item.label }}</n-text>
+            </n-h4>
+            <span class="tips">{{ item.tips }}</span>
+            <div style="flex: 1; margin-bottom: 10px">
+              <n-card
+                v-for="(subItem, subIndex) in item.value"
+                :key="subIndex"
+                closable
+                :on-close="() => item.value.splice(subIndex, 1)"
+              >
+                <n-grid :cols="cols" :x-gap="20">
+                  <n-form-item-gi
+                    v-for="(subFieldValue, subField) in subItem"
+                    :key="subField"
+                    :label="subFieldValue.label"
+                    :path="`${key}.value.${subIndex}.${subField}.value`"
+                    :rule="subFieldValue.rule"
+                  >
+                    <former-item :data="subFieldValue" />
+                  </n-form-item-gi>
+                </n-grid>
+              </n-card>
+              <n-button
+                dashed
+                round
+                size="small"
+                type="primary"
+                @click="addItem(item.value, item.fields)"
+              >
+                新增
+              </n-button>
+            </div>
+          </n-gi>
+
+          <n-gi v-else-if="item.type === 'title'" :span="24">
+            <n-h3 prefix="bar">
+              <n-text type="primary">{{ item.label }}</n-text>
+            </n-h3>
+            <span class="tips">{{ item.tips }}</span>
+          </n-gi>
+
+          <n-form-item-gi
+            v-else-if="!item.hidden"
+            :label="item.label"
+            :path="`${key}.value`"
+            :rule="item.rule"
           >
-            <!-- array -->
-            <n-form-item-gi
-              v-if="fieldValue.type === 'array'"
-              :span="24"
-              :label="fieldValue.label"
-            >
-              <div style="flex: 1">
-                <n-card
-                  v-for="(subItem, i) in fieldValue.value"
-                  :key="i"
-                  closable
-                  :on-close="() => fieldValue.value.splice(i, 1)"
-                >
-                  <n-grid :cols="24" :x-gap="24">
-                    <n-form-item-gi
-                      v-for="(subFieldValue, subField) in subItem"
-                      :key="subField"
-                      :span="6"
-                      :label="subFieldValue.label"
-                      :path="`${itemKey}.fields.${field}.value.${i}.${subField}.value`"
-                      :rule="subFieldValue.rule"
-                    >
-                      <former-item :data="subFieldValue" />
-                    </n-form-item-gi>
-                  </n-grid>
-                </n-card>
-                <n-button
-                  dashed
-                  round
-                  size="small"
-                  type="primary"
-                  @click="addItem(fieldValue.value, fieldValue.fields)"
-                >
-                  新增
-                </n-button>
-              </div>
-            </n-form-item-gi>
-            <n-form-item-gi
-              v-else-if="!fieldValue.hidden"
-              :label="fieldValue.label"
-              :path="`${itemKey}.fields.${field}.value`"
-              :rule="fieldValue.rule"
-            >
-              <template #label>
-                {{ fieldValue.label }}
-                <span class="tips">{{ fieldValue.tips }}</span>
-              </template>
-              <former-item :data="fieldValue" />
-            </n-form-item-gi>
-          </template>
-        </n-grid>
-      </n-card>
+            <template #label>
+              {{ item.label }}
+              <span class="tips">{{ item.tips }}</span>
+            </template>
+            <former-item :data="item" />
+          </n-form-item-gi>
+        </template>
+      </n-grid>
+
       <n-space>
         <n-button round
           :loading="loading"
@@ -91,7 +90,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { FormInst } from 'naive-ui'
-import type { FormDataModel } from '@/types/former'
+import type { FormDataModel, FormDataModelItem } from '@/types/former'
 
 export default defineComponent({
   components: {},
@@ -108,8 +107,8 @@ export default defineComponent({
       default: false,
     },
     cols: {
-      type: [Number, String] as PropType<number | string>,
-      default: '1 s:2 m:3 l:4 xl:5',
+      type: String as PropType<string>,
+      default: '1 400:2 600:3 800:4 1200:5',
     },
   },
   emits: ['onCancel', 'onConfirm', 'onError'],
@@ -127,7 +126,7 @@ export default defineComponent({
   beforeUnmount() {},
   unmounted() {},
   methods: {
-    addItem(target: FormDataModel[], item: FormDataModel | undefined) {
+    addItem(target: FormDataModelItem[], item: FormDataModel | undefined) {
       target.push(JSON.parse(JSON.stringify(item)))
     },
     validForm() {

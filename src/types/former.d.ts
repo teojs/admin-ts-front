@@ -9,19 +9,22 @@ export type FormItemType =
   | 'color'
   | 'array'
 
-export interface FormDataModelItem<F> {
+export interface FormDataModelItem {
   label?: string
-  type: FormItemType
-  value: any
+  type?: FormItemType
+  value?: any
   placeholder?: string
   tips?: string
   disabled?: boolean
   hidden?: boolean
-  fields?: F
+  options?: any[],
+  fields?: {
+    [x?: string]: FormDataModelItem
+  }
   rule?: FormItemRule | FormItemRule[]
   onChange?: <P = any>(payload: P) => void
 }
 
 export interface FormDataModel {
-  [x: string]: FormDataModelItem<FormDataModel>
+  [x: string]: FormDataModelItem
 }
