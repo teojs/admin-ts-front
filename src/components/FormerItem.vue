@@ -5,6 +5,7 @@
     v-model:value="data.value"
     :disabled="data.disabled"
     :placeholder="data.placeholder"
+    @update:value="data.onChange && data.onChange($event)"
   >
     <template v-if="data.prefix" #prefix>
       {{ data.prefix }}
@@ -20,6 +21,7 @@
     v-model:value="data.value"
     :disabled="data.disabled"
     :placeholder="data.placeholder"
+    @update:value="data.onChange && data.onChange($event)"
   >
     <template v-if="data.prefix" #prefix>
       {{ data.prefix }}
