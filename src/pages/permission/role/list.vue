@@ -1,8 +1,8 @@
 <template>
   <div id="page" class="page">
     <n-data-table
-      remote
       :columns="mainListColumns"
+      remote
       :data="mainListData"
       :pagination="pagination"
       max-height="calc(100vh - 225px)"
@@ -157,11 +157,6 @@ export default defineComponent({
         },
       ] as DataTableColumns<InternalRowData>,
       mainListData: [] as InternalRowData[],
-      mainPagination: {
-        page: 1,
-        pageSize: 20,
-        itemCount: 0,
-      },
     }
   },
   activated() {},

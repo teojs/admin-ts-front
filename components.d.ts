@@ -60,5 +60,6 @@ declare module '@vue/runtime-core' {
     PagePanel: typeof import('./src/components/PagePanel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Search: typeof import('./src/components/Search.vue')['default']
   }
 }

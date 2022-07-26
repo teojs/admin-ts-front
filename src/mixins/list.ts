@@ -35,5 +35,4 @@ export default defineComponent({
     },
     getMainList(page?: number) {},
   },
-  watch: {},
 })

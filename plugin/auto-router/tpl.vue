@@ -22,7 +22,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'component name here',
   components: {},
-  data(){
+  data() {
     return {}
   },
   beforeCreate() {},
