@@ -19,7 +19,8 @@
   "meta": {
     "title": "角色管理",
     "sort": 1,
-    "isMenu": true
+    "isMenu": true,
+    "keepAlive": true
   },
   "redirect": "/permission/role/list"
 }

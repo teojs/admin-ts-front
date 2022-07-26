@@ -8,7 +8,8 @@
 {
   "meta": {
     "title": "角色编辑",
-    "hidden": true
+    "hidden": true,
+    "keepAlive": true
   }
 }
 </route>

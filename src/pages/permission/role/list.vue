@@ -1,10 +1,15 @@
 <template>
   <div id="page" class="page">
-    <main-table
+    <n-data-table
+      remote
       :columns="mainListColumns"
       :data="mainListData"
+      :pagination="pagination"
       max-height="calc(100vh - 225px)"
       :scroll-x="3000"
+      :row-key="(row) => row.id"
+      @update:page="onUpdatePage"
+      @update:pageSize="onUpdatePageSize"
     />
   </div>
 </template>
@@ -23,6 +28,7 @@
 import { defineComponent, h } from 'vue'
 import type { DataTableColumns } from 'naive-ui'
 import { NButton } from 'naive-ui'
+import listMixin from '@/mixins/list'
 
 interface InternalRowData {
   id: number
@@ -44,6 +50,7 @@ interface InternalRowData {
 export default defineComponent({
   name: 'permission-role-list',
   components: {},
+  mixins: [listMixin],
   data() {
     return {
       mainListColumns: [
@@ -150,6 +157,11 @@ export default defineComponent({
         },
       ] as DataTableColumns<InternalRowData>,
       mainListData: [] as InternalRowData[],
+      mainPagination: {
+        page: 1,
+        pageSize: 20,
+        itemCount: 0,
+      },
     }
   },
   activated() {},
@@ -159,20 +171,20 @@ export default defineComponent({
   beforeMount() {},
   mounted() {
     this.getMainList()
-    console.log(1)
   },
   beforeUpdate() {},
   updated() {},
   beforeUnmount() {},
   unmounted() {},
   methods: {
-    getMainList(page: number = 1) {
+    getMainList(page?: number) {
       this.$api.test
         .getMainList({
           loading: '#page',
         })
         .then((res) => {
           this.mainListData = res.body?.list || []
+          this.pagination.itemCount = res.body?.total || 0
         })
     },
   },

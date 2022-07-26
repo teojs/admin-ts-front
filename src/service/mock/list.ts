@@ -1,16 +1,17 @@
 import { MockMethod } from 'vite-plugin-mock'
+import Mock from 'mockjs'
 export default [
   {
     url: '/api/getMainList',
     method: 'get',
     timeout: 1000,
-    response: () => {
-      return {
-        code: 0,
+    response: ({ query }: { query: { page: number; pageSize: number } }) => {
+      const data = Mock.mock({
+        code: '01',
         body: {
-          list: [
+          'list|20': [
             {
-              id: 1,
+              'id|+1': 1,
               number: 'string',
               name: 'string',
               isHaveFullTime: true,
@@ -26,11 +27,12 @@ export default [
               coopStatus: 1,
             },
           ],
-          page: 1,
+          page: query.page,
           total: 100,
         },
         message: 'success',
-      }
+      })
+      return data
     },
   },
 ] as MockMethod[]
