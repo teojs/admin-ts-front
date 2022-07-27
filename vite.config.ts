@@ -19,53 +19,55 @@ const servers: Servers = {
 }
 const proxyTarget = process.env.npm_config_api || 'test'
 const basePath = process.env.npm_config_base || '/'
+const mock = Boolean(process.env.npm_config_mock)
 
 // https://vitejs.dev/config/
-export default ({ command }: ConfigEnv): UserConfigExport => defineConfig({
-  base: basePath,
-  plugins: [
-    vue(),
-    eslint({
-      // fix: true,
-      throwOnError: true,
-      throwOnWarning: true,
-    }),
-    {
-      ...autoRouter({
-        pagesDir: 'src/pages',
-        layoutsDir: 'src/layouts',
-        routerDir: 'src/router',
+export default ({ command }: ConfigEnv): UserConfigExport =>
+  defineConfig({
+    base: basePath,
+    plugins: [
+      vue(),
+      eslint({
+        // fix: true,
+        throwOnError: true,
+        throwOnWarning: true,
       }),
-      enforce: 'pre',
-    },
-    {
-      ...autoApi({
-        serviceDir: 'src/service',
-        apisDir: 'src/service/apis',
+      {
+        ...autoRouter({
+          pagesDir: 'src/pages',
+          layoutsDir: 'src/layouts',
+          routerDir: 'src/router',
+        }),
+        enforce: 'pre',
+      },
+      {
+        ...autoApi({
+          serviceDir: 'src/service',
+          apisDir: 'src/service/apis',
+        }),
+        enforce: 'pre',
+      },
+      viteMockServe({
+        mockPath: 'src/service/mock',
+        localEnabled: command === 'serve' && mock,
       }),
-      enforce: 'pre',
-    },
-    viteMockServe({
-      mockPath: 'src/service/mock',
-      localEnabled: command === 'serve',
-    }),
-    Components({
-      resolvers: [NaiveUiResolver()],
-    }),
-  ],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-    },
-  },
-  server: {
-    port: 8080,
-    proxy: {
-      '/api': {
-        target: servers[proxyTarget],
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+      Components({
+        resolvers: [NaiveUiResolver()],
+      }),
+    ],
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src'),
       },
     },
-  },
-})
+    server: {
+      port: 8080,
+      proxy: {
+        '/api': {
+          target: servers[proxyTarget],
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+      },
+    },
+  })
