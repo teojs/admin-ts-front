@@ -16,5 +16,7 @@ declare module 'vue-router' {
     keepAlive?: boolean
     // 是否菜单栏
     isMenu?: boolean
+    // 异步组件，默认true
+    dynamic: boolean
   }
 }
