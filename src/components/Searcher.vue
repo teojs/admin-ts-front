@@ -52,7 +52,6 @@ export default defineComponent({
   unmounted() {},
   methods: {
     getFormDataValues() {
-      console.log(1)
       return 1
     },
   },

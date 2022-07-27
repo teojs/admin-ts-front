@@ -26,11 +26,10 @@
 </route>
 
 <script lang="ts">
-import { defineComponent, h, ref } from 'vue'
+import { defineComponent, h } from 'vue'
 import type { DataTableColumns } from 'naive-ui'
 import { NButton } from 'naive-ui'
 import listMixin from '@/mixins/list'
-import Searcher from '@/components/Searcher.vue'
 
 interface InternalRowData {
   id: number
@@ -168,8 +167,6 @@ export default defineComponent({
   beforeMount() {},
   mounted() {
     this.getMainList()
-    const searchRef = ref<typeof Searcher>()
-    const a = searchRef?.value?.getFormDataValues()
   },
   beforeUpdate() {},
   updated() {},

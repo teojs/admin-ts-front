@@ -7,9 +7,8 @@ import path from 'node:path'
  *
  * @export
  * @param {string} filePath
- * @param {string} fileName
  */
-export default function initTemplate(filePath: string, fileName: string) {
+export default function initTemplate(filePath: string) {
   try {
     console.log('\n==发现空文件，正在写入模板：', filePath)
 
@@ -20,7 +19,11 @@ export default function initTemplate(filePath: string, fileName: string) {
       filePath,
       template.replace(
         /component name here/g,
-        fileName.replace('.vue', '').replace(/\\|\//g, '-')
+        filePath
+          .replace(process.cwd(), '')
+          .replace('src/pages/', '')
+          .replace('.vue', '')
+          .replace(/\\|\//g, '-')
       )
     )
 
