@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 src/router/routes.ts
 src/service/types/api.d.ts
+components.d.ts
