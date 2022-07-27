@@ -12,12 +12,12 @@ export type FormItemType =
 export interface FormDataModelItem {
   label?: string
   type?: FormItemType
-  value?: any
+  value?: any | FormDataModelItem[]
   placeholder?: string
   tips?: string
   disabled?: boolean
   hidden?: boolean
-  options?: any[],
+  options?: any[]
   fields?: {
     [x?: string]: FormDataModelItem
   }
@@ -27,4 +27,8 @@ export interface FormDataModelItem {
 
 export interface FormDataModel {
   [x: string]: FormDataModelItem
+}
+
+export interface FormerMethods {
+  validForm: <D = any>(cb: (data: D) => void) => void
 }
