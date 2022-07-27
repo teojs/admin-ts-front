@@ -10,10 +10,21 @@
       <template v-for="(item, key) in formData" :key="key">
         <!-- array -->
         <n-gi v-if="item.type === 'array'" :span="24">
-          <n-h4 prefix="bar">
-            <n-text type="primary">{{ item.label }}</n-text>
-          </n-h4>
-          <span class="tips">{{ item.tips }}</span>
+          <n-space>
+            <n-h4 prefix="bar">
+              <n-text type="primary">{{ item.label }}</n-text>
+            </n-h4>
+            <n-button
+              dashed
+              round
+              size="small"
+              type="primary"
+              @click="addItem(item.value, item.fields)"
+            >
+              新增
+            </n-button>
+            <span class="tips">{{ item.tips }}</span>
+          </n-space>
           <div style="flex: 1; margin-bottom: 10px">
             <n-card
               v-for="(subItem, subIndex) in item.value"
@@ -33,15 +44,6 @@
                 </n-form-item-gi>
               </n-grid>
             </n-card>
-            <n-button
-              dashed
-              round
-              size="small"
-              type="primary"
-              @click="addItem(item.value, item.fields)"
-            >
-              新增
-            </n-button>
           </div>
         </n-gi>
 

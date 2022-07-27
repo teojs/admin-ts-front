@@ -69,7 +69,7 @@
     v-if="data.type === 'color'"
     v-model:value="data.value"
     :disabled="data.disabled"
-    :modes="data.modes"
+    :modes="data.colorType"
   />
 
   <!-- radio -->
@@ -107,23 +107,13 @@
     v-model:value="data.value"
     :type="data.dateType || 'date'"
     :disabled="data.disabled"
+    :placeholder="data.placeholder"
     clearable
+    :start-placeholder="data.startPlaceholder"
+    :end-placeholder="data.endPlaceholder"
+    :is-date-disabled="data.isDateDisabled"
+    @update:value="data.onChange && data.onChange($event)"
   />
-
-  <!-- daterange -->
-  <div v-if="data.type === 'daterange'" class="flex align-center">
-    <n-date-picker
-      v-model:value="data.value[0]"
-      clearable
-      :disabled="data.disabled[0]"
-    />
-    <span class="ml10 mr10">至</span>
-    <n-date-picker
-      v-model:value="data.value[1]"
-      clearable
-      :disabled="data.disabled[1]"
-    />
-  </div>
 
   <!-- textarea -->
   <n-input
@@ -135,8 +125,8 @@
   />
 
   <!-- image -->
-  <n-upload
-    v-if="data.type === 'image' && data.show"
+  <!-- <n-upload
+    v-if="data.type === 'image' && !data.hidden"
     :action="data.action"
     :default-file-list="data.defaultFileList"
     list-type="image-card"
@@ -146,7 +136,7 @@
     :on-finish="finishUploadImage"
     :accept="data.accept"
     :headers="headers"
-  />
+  /> -->
 
   <!-- tag -->
   <n-space v-if="data.type === 'tag'">
@@ -165,21 +155,12 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
-import { useMessage } from 'naive-ui'
 import type { FormDataModelItem } from '@/types/former'
-export default {
+export default defineComponent({
   components: {},
-  setup() {
-    const message = useMessage()
-    return {
-      message,
-      headers: {
-        Authorization:
-          'SIMPLELOVEDXZSADMINSERVICE ' + localStorage.getItem('token'),
-      },
-    }
-  },
+  setup() {},
   props: {
     data: {
       type: Object as PropType<FormDataModelItem>,
@@ -206,7 +187,7 @@ export default {
   methods: {},
   computed: {},
   watch: {},
-}
+})
 </script>
 
 <style lang="less">
