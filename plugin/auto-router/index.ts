@@ -32,7 +32,7 @@ const autoRouter = (cusConfig: CusConfig) => ({
         const filePath = path.posix.join(rootPath, fileName)
         if (isVue(filePath)) {
           if (isEmptyFile(filePath)) {
-            initTemplate(filePath, fileName)
+            initTemplate(filePath)
           }
           initRoutes(cusConfig)
         } else {

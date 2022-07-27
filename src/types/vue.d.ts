@@ -20,5 +20,6 @@ declare module '@vue/runtime-core' {
   }
   interface GlobalComponents {
     Former: typeof import('@/components/Former.vue')['default']
+    Searcher: typeof import('@/components/Searcher.vue')['default']
   }
 }

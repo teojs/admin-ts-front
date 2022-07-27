@@ -3,15 +3,27 @@ import { parse } from 'vue/compiler-sfc'
 import { isEmptyFile } from './utils'
 import initTemplate from './initTemplate'
 
-interface RouteInfo {
-  meta?: {
-    title?: string
-  }
-  sort?: boolean
+interface RouteMeta {
+  // 页面标题
+  title: string
+  // 菜单栏排序
+  sort?: number
+  // 是否隐藏掉
   hidden?: boolean
-  redirect?: string
-  dynamic?: boolean
-  chunk?: string
+  // 校验授权
+  requiresAuth?: boolean
+  // 设置菜单栏icon
+  icon?: string
+  // 是否缓存页面
+  keepAlive?: boolean
+  // 是否菜单栏
+  isMenu?: boolean
+  // 异步组件，默认true
+  dynamic: boolean
+}
+
+interface RouteInfo {
+  meta?: RouteMeta
 }
 
 /**
@@ -28,9 +40,7 @@ export function readRouteInfo(filePath: string): RouteInfo {
     }
     const fileContent = fs.readFileSync(filePath, 'utf-8')
     const customBlocks = parse(fileContent).descriptor.customBlocks
-    return JSON.parse(
-      customBlocks.filter(o => o.type === 'route')[0].content
-    )
+    return JSON.parse(customBlocks.filter((o) => o.type === 'route')[0].content)
   } catch {
     return {}
   }

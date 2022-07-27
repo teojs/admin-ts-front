@@ -20,7 +20,7 @@ interface WWLoginConfig {
   lang: string
 }
 
-declare module '@/utils/wwLogin-1.2.7.js' {
+declare module '@/utils/wwLogin-1.2.7' {
   export default class WWLogin {
     constructor(config: WWLoginConfig)
     destroyed() {}

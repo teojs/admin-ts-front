@@ -1,6 +1,17 @@
 <template>
   <div class="page">
-    <former :form-data="formData" />
+    <former ref="former" :form-data="formData" />
+
+    <n-space>
+      <n-button round
+        type="primary"
+        @click="validForm"
+      > 提交 </n-button>
+      <n-button round
+        type="tertiary"
+        @click="$router.go(-1)"
+      > 取消 </n-button>
+    </n-space>
   </div>
 </template>
 
@@ -16,7 +27,18 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import type { FormDataModel } from '@/types/former'
+import type { FormDataModel, FormerMethods } from '@/types/former'
+interface FromDataValue {
+  name: string
+  age: number
+  bodyInfo: string
+  height: number
+  weight: number
+  likes: {
+    name: string
+    proficiency: string
+  }[]
+}
 
 export default defineComponent({
   name: 'role-role',
@@ -115,6 +137,55 @@ export default defineComponent({
             },
           },
         },
+        birthday: {
+          label: '生日',
+          type: 'date',
+          value: null,
+          placeholder: '请选择出生日期',
+          isDateDisabled: (current) => {
+            return current > Date.now()
+          },
+        },
+        learnDate: {
+          label: '学习时间',
+          type: 'date',
+          dateType: 'datetimerange',
+          value: null,
+          placeholder: '请选择出生日期',
+          startPlaceholder: '请选择开始日期',
+          endPlaceholder: '请选择结束日期',
+          isDateDisabled: (current, phase, value) => {
+            return current > Date.now()
+          },
+        },
+        switch: {
+          label: '开关',
+          type: 'switch',
+          value: false,
+        },
+        radio: {
+          label: '单选',
+          type: 'radio',
+          value: '吃',
+          options: [
+            {
+              label: '吃',
+              value: '吃',
+            },
+            {
+              label: '喝',
+              value: '喝',
+            },
+            {
+              label: '玩',
+              value: '玩',
+            },
+            {
+              label: '乐',
+              value: '乐',
+            },
+          ],
+        },
       } as FormDataModel,
     }
   },
@@ -126,7 +197,15 @@ export default defineComponent({
   updated() {},
   beforeUnmount() {},
   unmounted() {},
-  methods: {},
+  methods: {
+    validForm() {
+      const formerRef = this.$refs.former as FormerMethods
+      formerRef.validForm<FromDataValue>((data) => {
+        // eslint-disable-next-line no-console
+        console.log(data)
+      })
+    },
+  },
   filters: {},
   computed: {},
   watch: {},

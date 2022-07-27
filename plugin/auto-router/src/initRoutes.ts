@@ -83,7 +83,7 @@ export default async function initRoutes(cusConfig: CusConfig) {
 
       routeImport += getImport(
         true,
-        routeInfo.dynamic,
+        routeInfo?.meta?.dynamic,
         parentKey,
         fileName,
         cusConfig
@@ -111,7 +111,7 @@ export default async function initRoutes(cusConfig: CusConfig) {
 
     routeImport += getImport(
       false,
-      routeInfo.dynamic,
+      routeInfo.meta.dynamic,
       parentKey,
       fileName,
       cusConfig

@@ -1,5 +1,6 @@
 <template>
   <div id="page" class="page">
+    <searcher ref="searcher" />
     <n-data-table
       :columns="mainListColumns"
       remote
