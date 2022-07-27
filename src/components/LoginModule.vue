@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import WwLogin from '@/utils/wwLogin-1.2.7.js'
+import WwLogin from '@/utils/wwLogin-1.2.7'
 
 export default defineComponent({
   components: {},

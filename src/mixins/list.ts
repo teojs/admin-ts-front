@@ -2,7 +2,7 @@ import { defineComponent } from 'vue'
 import type { PaginationProps } from 'naive-ui'
 
 // 因为这些属性是readonly，所以用extend方式来扩展
-interface IPaginationProps extends PaginationProps{
+interface IPaginationProps extends PaginationProps {
   page: number
   pageSize: number
   itemCount: number
