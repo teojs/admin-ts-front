@@ -40,7 +40,7 @@ export default function api(ctx: IRequestConfig): MenuOption[] {
     routes: readonly RouteRecordRaw[],
     children: MenuOption[]
   ) {
-    const sortedRoutes = _.sortBy(routes, 'sort')
+    const sortedRoutes = _.sortBy(routes, 'meta.sort')
     sortedRoutes.forEach((o) => {
       // 是否启用权限过滤
       const checkAuth: boolean =

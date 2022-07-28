@@ -4,13 +4,13 @@
       <component
         :is="Component"
         v-if="route.meta.keepAlive"
-        key="keepaliveview"
+        :key="route.path + hash"
       />
     </keep-alive>
     <component
       :is="Component"
       v-if="!route.meta.keepAlive"
-      key="keepaliveview"
+      :key="route.path + hash"
     />
   </router-view>
 </template>
