@@ -4,12 +4,25 @@
       <component
         :is="Component"
         v-if="route.meta.keepAlive"
-        :key="route.name"
+        key="keepaliveview"
       />
     </keep-alive>
-    <component :is="Component"
+    <component
+      :is="Component"
       v-if="!route.meta.keepAlive"
-      :key="route.name"
+      key="keepaliveview"
     />
   </router-view>
 </template>
+
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
+export default defineComponent({
+  props: {
+    hash: {
+      type: String as PropType<string>,
+      default: 'keepaliveview',
+    },
+  },
+})
+</script>

@@ -55,10 +55,17 @@ export default defineComponent({
           type: 'input',
           value: '',
           placeholder: '请输入姓名。',
-          rule: {
-            type: 'string',
-            required: true,
-          },
+          rule: [
+            {
+              type: 'string',
+              required: true,
+            },
+            {
+              max: 10,
+              required: true,
+              message: 'xxxx',
+            },
+          ],
         },
         age: {
           label: '年龄',

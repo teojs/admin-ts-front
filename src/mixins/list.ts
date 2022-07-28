@@ -23,6 +23,10 @@ export default defineComponent({
     } as IPaginationProps,
   }),
   created() {},
+  activated() {},
+  mounted() {
+    this.getMainList()
+  },
   methods: {
     onUpdatePage(page: number) {
       this.pagination.page = page

@@ -1,17 +1,14 @@
 <template>
-  <div class="page">
-    用户列表
-    <router-link to="detail?id=1"> 去详情1 </router-link>
-    <router-link to="detail?id=2"> 去详情2 </router-link>
-  </div>
+  <n-modal v-model:show="showModal" :auto-focus="false">
+    <n-card class="page" title="弹框标题"> 我是弹框 </n-card>
+  </n-modal>
 </template>
 
 <route lang="json">
 {
   "meta": {
-    "title": "用户列表",
-    "sort": 1,
-    "keepAlive": true
+    "title": "permission-user-list-edit",
+    "sort": 1
   }
 }
 </route>
@@ -20,15 +17,22 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'permission-role-list',
+  name: 'permission-user-list-edit',
   components: {},
-  data: () => ({
-    test: 123,
-  }),
+  data() {
+    return {
+      showModal: false,
+    }
+  },
   beforeCreate() {},
+  activated() {},
+  deactivated() {},
   created() {},
   beforeMount() {},
-  mounted() {},
+  mounted() {
+    this.showModal = true
+    console.log(1111)
+  },
   beforeUpdate() {},
   updated() {},
   beforeUnmount() {},

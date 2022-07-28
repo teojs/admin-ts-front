@@ -74,12 +74,17 @@
       <router-view v-slot="{ Component, route }">
         <transition name="route-transform" mode="out-in">
           <keep-alive>
-            <n-layout-content :key="route.fullPath" class="content">
-              <component :is="Component" />
+            <n-layout-content :key="route.name || ''" class="content">
+              <keep-alive>
+                <component :is="Component" :key="route.name || ''" />
+              </keep-alive>
             </n-layout-content>
           </keep-alive>
         </transition>
       </router-view>
+      <!-- <n-layout-content class="content">
+        <router-view />
+      </n-layout-content> -->
     </n-layout>
   </n-layout>
 </template>

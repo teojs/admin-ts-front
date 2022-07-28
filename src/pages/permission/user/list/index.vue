@@ -12,13 +12,14 @@
       @update:page="onUpdatePage"
       @update:pageSize="onUpdatePageSize"
     />
+    <router-view />
   </div>
 </template>
 
 <route lang="json">
 {
   "meta": {
-    "title": "角色列表",
+    "title": "用户列表",
     "sort": 1,
     "keepAlive": true
   }
@@ -49,7 +50,7 @@ interface InternalRowData {
 }
 
 export default defineComponent({
-  name: 'permission-role-list',
+  name: 'permission-user-list',
   components: {},
   mixins: [listMixin],
   data() {
@@ -144,7 +145,7 @@ export default defineComponent({
                   secondary: true,
                   onClick: () => {
                     this.$router.push({
-                      path: 'edit',
+                      path: 'list/edit',
                       query: { id: row.id },
                     })
                   },
@@ -160,6 +161,7 @@ export default defineComponent({
       mainListData: [] as InternalRowData[],
     }
   },
+  activated() {},
   deactivated() {},
   beforeCreate() {},
   created() {},

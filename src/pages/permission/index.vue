@@ -1,17 +1,5 @@
 <template>
-  <router-view v-slot="{ Component, route }">
-    <keep-alive>
-      <component
-        :is="Component"
-        v-if="route.meta.keepAlive"
-        :key="route.name"
-      />
-    </keep-alive>
-    <component :is="Component"
-      v-if="!route.meta.keepAlive"
-      :key="route.name"
-    />
-  </router-view>
+  <keep-alive-view hash="permission" />
 </template>
 
 <route lang="json">
@@ -29,6 +17,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+  name: 'permission',
   components: {},
   activated() {},
   beforeCreate() {},
