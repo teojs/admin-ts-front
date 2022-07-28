@@ -1,11 +1,16 @@
 <template>
-  <n-form ref="formRef"
+  <n-form
+    ref="formRef"
     class="former"
     :model="formData"
+    :show-label="showLabel"
   >
-    <n-grid :cols="cols"
+    <n-grid
+      :cols="cols"
       responsive="self"
       :x-gap="20"
+      :collapsed="collapsed"
+      :collapsed-rows="collapsedRows"
     >
       <template v-for="(item, key) in formData" :key="key">
         <!-- array -->
@@ -89,6 +94,18 @@ export default defineComponent({
     cols: {
       type: String as PropType<string | number>,
       default: '1 400:2 600:3 800:4 1200:5',
+    },
+    showLabel: {
+      type: Boolean as PropType<boolean>,
+      default: true,
+    },
+    collapsed: {
+      type: Boolean as PropType<boolean>,
+      default: false,
+    },
+    collapsedRows: {
+      type: Number as PropType<number>,
+      default: 1,
     },
   },
   emits: ['onCancel', 'onConfirm', 'onError'],

@@ -1,6 +1,19 @@
 <template>
   <div id="page" class="page">
-    <searcher ref="searcher" />
+    <searcher ref="searcher" :search-data="searchData">
+      <template #left>
+        <n-button type="primary"> 导入 </n-button>
+      </template>
+    </searcher>
+    <option-bar>
+      <template #left>
+        <n-button type="primary" size="small"> 新增 </n-button>
+      </template>
+      <template #right>
+        <n-button size="small"> 自定义列 </n-button>
+      </template>
+    </option-bar>
+
     <n-data-table
       :columns="mainListColumns"
       remote
@@ -30,6 +43,7 @@ import { defineComponent, h } from 'vue'
 import type { DataTableColumns } from 'naive-ui'
 import { NButton } from 'naive-ui'
 import listMixin from '@/mixins/list'
+import type { FormDataModel } from '@/types/former'
 
 interface InternalRowData {
   id: number
@@ -158,6 +172,38 @@ export default defineComponent({
         },
       ] as DataTableColumns<InternalRowData>,
       mainListData: [] as InternalRowData[],
+      searchData: {
+        id: {
+          type: 'input',
+          placeholder: '请输入ID进行搜索',
+        },
+        name: {
+          type: 'input',
+          placeholder: '请输入名称进行搜索',
+        },
+        no: {
+          type: 'inputNumber',
+          placeholder: '请输入编号进行搜索',
+        },
+        title: {
+          type: 'input',
+          placeholder: '请输入标题进行搜索',
+        },
+        状态: {
+          type: 'select',
+          placeholder: '请选择状态进行搜索',
+          options: [
+            {
+              label: '启用',
+              value: 1,
+            },
+            {
+              label: '禁用',
+              value: 0,
+            },
+          ],
+        },
+      } as FormDataModel,
     }
   },
   deactivated() {},
