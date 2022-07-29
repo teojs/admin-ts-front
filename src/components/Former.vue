@@ -108,7 +108,6 @@ export default defineComponent({
       default: 1,
     },
   },
-  emits: ['onCancel', 'onConfirm', 'onError'],
   data() {
     return {}
   },
@@ -126,31 +125,11 @@ export default defineComponent({
     addItem(target: FormDataModelItem[], item: FormDataModel | undefined) {
       target.push(JSON.parse(JSON.stringify(item)))
     },
-    validForm(fn: Function) {
+    validForm(cb: Function) {
       const formRef = this.$refs.formRef as FormInst
       formRef.validate((errors) => {
         if (!errors) {
-          const getData = (formData: FormDataModel) => {
-            const data: { [x: string]: any } = {}
-            for (const key in formData) {
-              if (Object.prototype.hasOwnProperty.call(formData, key)) {
-                const item = formData[key]
-                if (item.type === 'array') {
-                  data[key] = (item.value as FormDataModelItem[]).map((o) =>
-                    getData(o.value)
-                  )
-                } else {
-                  data[key] = item.value
-                }
-              }
-            }
-            return data
-          }
-
-          fn(getData(this.formData))
-          this.$emit('onConfirm', this.formData)
-        } else {
-          this.$emit('onError', errors)
+          cb()
         }
       })
     },
