@@ -79,196 +79,219 @@ export default defineComponent({
   mixins: [listMixin],
   data() {
     return {
-      mainListColumns: [
-        {
-          type: 'selection',
-        },
-        {
-          title: 'ID',
-          key: 'id',
-          width: 150,
-        },
-        {
-          title: '品牌名称',
-          key: 'brandName',
-          width: 150,
-        },
-        {
-          title: '分类ID',
-          key: 'categoryId',
-          width: 150,
-        },
-        {
-          title: '商品编码',
-          key: 'commodityCode',
-          width: 80,
-        },
-        {
-          title: '商品名称',
-          key: 'commodityName',
-          width: 80,
-        },
-        {
-          title: '商品类型',
-          key: 'commodityType',
-          width: 100,
-        },
-        {
-          title: '行记录创建时间',
-          key: 'createTime',
-          width: 120,
-        },
-        {
-          title: '行记录创用户',
-          key: 'createdByUser',
-          width: 120,
-        },
-        {
-          title: '商品描述',
-          key: 'description',
-          width: 150,
-        },
-        {
-          title: '是否已删除',
-          key: 'isDeleted',
-          width: 200,
-        },
-        {
-          title: '是否启用',
-          key: 'isEnabled',
-          width: 80,
-        },
-        {
-          title: '是否多规格商品',
-          key: 'isMultiSize',
-          width: 120,
-        },
-        {
-          title: '市场价',
-          key: 'marketPrice',
-          width: 120,
-        },
-        {
-          title: '商品型号',
-          key: 'model',
-          width: 120,
-        },
-        {
-          title: '进货价',
-          key: 'purchasePrice',
-          width: 120,
-        },
-        {
-          title: '上下架',
-          key: 'isVisible',
-          width: 200,
-          render: (row) => {
-            return row.isVisible ? '上架' : '下架'
-          },
-        },
-        {
-          title: '行记录更新时间',
-          key: 'updateTime',
-        },
-        {
-          title: '行记录更用户',
-          key: 'updatedByUser',
-        },
-        {
-          title: '数据更新系统',
-          key: 'updator',
-        },
-        {
-          title: '操作',
-          align: 'right',
-          fixed: 'right',
-          width: 80,
-          render: (row) => {
-            return [
-              h(
-                NButton,
-                {
-                  size: 'small',
-                  strong: true,
-                  secondary: true,
-                  onClick: () => {
-                    this.$router.push({
-                      path: 'edit',
-                      query: { id: row.id },
-                    })
-                  },
-                },
-                {
-                  default: () => '编辑',
-                }
-              ),
-            ]
-          },
-        },
-      ] as DataTableColumns<InternalRowData>,
+      mainListColumns: [] as DataTableColumns<InternalRowData>,
       mainListData: [] as InternalRowData[],
       searchData: {
         id: {
           type: 'numberRange',
-          placeholder: '请输入ID进行搜索',
           clearable: true,
           value: null,
           startPlaceholder: '起始ID',
           endPlaceholder: '结束ID',
-          rule: {
-            type: 'array',
-          },
         },
-        name: {
+        brandName: {
           type: 'input',
-          placeholder: '请输入名称进行搜索',
+          placeholder: '请输入品牌名称进行搜索',
           clearable: true,
           value: null,
-          rule: {
-            type: 'string',
-          },
         },
-        no: {
+        commodityCode: {
           type: 'inputNumber',
-          placeholder: '请输入编号进行搜索',
+          placeholder: '请输入商品编码进行搜索',
           clearable: true,
           value: null,
         },
-        title: {
+        commodityName: {
           type: 'input',
-          placeholder: '请输入标题进行搜索',
+          placeholder: '请输入商品名称进行搜索',
           clearable: true,
           value: null,
         },
-        status: {
+        commodityType: {
           type: 'select',
-          placeholder: '请选择状态进行搜索',
+          placeholder: '商品类型',
           clearable: true,
           value: null,
           options: [
             {
-              label: '启用',
-              value: 1,
+              label: '虚拟物品',
+              value: 'VIRTUAL',
             },
             {
-              label: '禁用',
-              value: 0,
+              label: '积分',
+              value: 'POINT',
+            },
+            {
+              label: '实物',
+              value: 'REAL',
             },
           ],
         },
-        creatTime: {
+        createTime: {
           type: 'date',
           dateType: 'daterange',
           value: null,
-          startPlaceholder: '开始时间',
-          endPlaceholder: '结束时间',
+          startPlaceholder: '创建开始时间',
+          endPlaceholder: '创建结束时间',
         },
       } as FormDataModel,
+      commodityTypeMap: {
+        VIRTUAL: '虚拟物品',
+        POINT: '积分',
+        REAL: '实物',
+      },
     }
   },
   deactivated() {},
   beforeCreate() {},
-  created() {},
+  created() {
+    this.mainListColumns = [
+      {
+        type: 'selection',
+      },
+      {
+        title: 'ID',
+        key: 'id',
+        width: 150,
+      },
+      {
+        title: '品牌名称',
+        key: 'brandName',
+        width: 150,
+      },
+      {
+        title: '分类ID',
+        key: 'categoryId',
+        width: 150,
+      },
+      {
+        title: '商品编码',
+        key: 'commodityCode',
+        width: 80,
+      },
+      {
+        title: '商品名称',
+        key: 'commodityName',
+        width: 80,
+      },
+      {
+        title: '商品类型',
+        key: 'commodityType',
+        width: 100,
+        render: (row) => {
+          return this.commodityTypeMap[row.commodityType]
+        },
+      },
+      {
+        title: '行记录创建时间',
+        key: 'createTime',
+        width: 150,
+        render: (row) => {
+          return this.$formatDate(row.createTime, 'YYYY-MM-DD HH:mm:ss')
+        },
+      },
+      {
+        title: '行记录创用户',
+        key: 'createdByUser',
+        width: 120,
+      },
+      {
+        title: '商品描述',
+        key: 'description',
+        width: 150,
+      },
+      {
+        title: '是否已删除',
+        key: 'isDeleted',
+        width: 200,
+        render: (row) => {
+          return row.isDeleted ? '是' : '否'
+        },
+      },
+      {
+        title: '是否启用',
+        key: 'isEnabled',
+        width: 80,
+        render: (row) => {
+          return row.isEnabled ? '是' : '否'
+        },
+      },
+      {
+        title: '是否多规格商品',
+        key: 'isMultiSize',
+        width: 150,
+        render: (row) => {
+          return row.isMultiSize ? '是' : '否'
+        },
+      },
+      {
+        title: '市场价',
+        key: 'marketPrice',
+        width: 120,
+      },
+      {
+        title: '商品型号',
+        key: 'model',
+        width: 120,
+      },
+      {
+        title: '进货价',
+        key: 'purchasePrice',
+        width: 120,
+      },
+      {
+        title: '上下架',
+        key: 'isVisible',
+        width: 200,
+        render: (row) => {
+          return row.isVisible ? '上架' : '下架'
+        },
+      },
+      {
+        title: '行记录更新时间',
+        key: 'updateTime',
+        render: (row) => {
+          return this.$formatDate(row.updateTime, 'YYYY-MM-DD HH:mm:ss')
+        },
+      },
+      {
+        title: '行记录更用户',
+        key: 'updatedByUser',
+      },
+      {
+        title: '数据更新系统',
+        key: 'updator',
+      },
+      {
+        title: '操作',
+        key: '',
+        align: 'right',
+        fixed: 'right',
+        width: 80,
+        render: (row) => {
+          return [
+            h(
+              NButton,
+              {
+                size: 'small',
+                strong: true,
+                secondary: true,
+                onClick: () => {
+                  this.$router.push({
+                    path: 'edit',
+                    query: { id: row.id },
+                  })
+                },
+              },
+              {
+                default: () => '编辑',
+              }
+            ),
+          ]
+        },
+      },
+    ]
+  },
   beforeMount() {},
   mounted() {},
   beforeUpdate() {},
@@ -284,6 +307,7 @@ export default defineComponent({
             limit: this.pagination.pageSize,
             page: this.pagination.page,
           },
+          loading: '#page',
         })
         .then((res) => {
           this.mainListData = res.body?.results || []
