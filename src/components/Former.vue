@@ -64,7 +64,8 @@
           :label="item.label"
           :path="`${key}.value`"
           :rule="
-            item.rule || item.type === 'numberRange' ? numberRangeRule : undefined
+            item.rule ||
+              (item.type === 'numberRange' ? numberRangeRule : undefined)
           "
         >
           <template #label>

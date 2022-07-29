@@ -11,7 +11,11 @@
 
     <option-bar>
       <template #left>
-        <n-button type="primary" size="small"> 新增 </n-button>
+        <n-space>
+          <router-link to="edit">
+            <n-button type="primary" size="small"> 添加 </n-button>
+          </router-link>
+        </n-space>
       </template>
       <!-- <template #right>
         <n-button size="small"> 自定义列 </n-button>
