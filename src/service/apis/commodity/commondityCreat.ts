@@ -6,7 +6,7 @@ import type { AxiosRequestConfig } from 'axios'
 interface IRequestConfig extends AxiosRequestConfig {
   data: {
     brandName: string
-    // categoryId: number
+    categoryId: number
     commodityName: string
     commodityCode: string
     commodityType: string

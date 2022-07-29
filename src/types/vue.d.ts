@@ -10,6 +10,7 @@ import {
   loadingBar,
 } from '@/utils/createDiscreteApi'
 import FormatDate from '@/utils/formatDate'
+import GetFormData from '@/utils/getFormData'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -21,6 +22,7 @@ declare module '@vue/runtime-core' {
     $loadingBar: typeof loadingBar
     $dayjs: typeof dayjs
     $formatDate: FormatDate
+    $getFormData: GetFormData
   }
   interface GlobalComponents {
     Former: typeof import('@/components/Former.vue')['default']

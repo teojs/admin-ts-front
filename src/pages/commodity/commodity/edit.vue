@@ -144,29 +144,41 @@ export default defineComponent({
     validForm() {
       const formerRef = this.$refs.former as FormerMethods
       formerRef.validForm(() => {
-        // eslint-disable-next-line no-console
-        // console.log(this.formData)
         this.commoditycommondityCreat()
       })
     },
     commoditycommondityCreat() {
-      console.log(this.formData)
+      const formData: {
+        brandName: string
+        categoryId: number
+        commodityName: string
+        commodityCode: string
+        commodityType: string
+        description: string
+        isDeleted: boolean
+        isEnabled: boolean
+        isMultiSize: boolean
+        isVisible: boolean
+        marketPrice: number
+        model: string
+        purchasePrice: number
+      } = this.$getFormData(this.formData)
       this.$api.commodity
         .commondityCreat({
           data: {
-            brandName: this.formData.brandName.value,
-            // categoryId: this.formData.categoryId.value,
-            commodityName: this.formData.commodityName.value,
-            commodityCode: this.formData.commodityCode.value,
-            commodityType: this.formData.commodityType.value,
-            description: this.formData.description.value,
-            isDeleted: this.formData.isDeleted.value,
-            isEnabled: this.formData.isEnabled.value,
-            isVisible: this.formData.isVisible.value,
-            isMultiSize: this.formData.isMultiSize.value,
-            marketPrice: this.formData.marketPrice.value,
-            model: this.formData.model.value,
-            purchasePrice: this.formData.purchasePrice.value,
+            brandName: formData?.brandName,
+            categoryId: formData?.categoryId,
+            commodityName: formData?.commodityName,
+            commodityCode: formData?.commodityCode,
+            commodityType: formData?.commodityType,
+            description: formData?.description,
+            isDeleted: formData?.isDeleted,
+            isEnabled: formData?.isEnabled,
+            isVisible: formData?.isVisible,
+            isMultiSize: formData?.isMultiSize,
+            marketPrice: formData?.marketPrice,
+            model: formData?.model,
+            purchasePrice: formData?.purchasePrice,
           },
         })
         .then((res) => {

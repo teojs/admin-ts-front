@@ -5,6 +5,8 @@ import { message, notification, dialog, loadingBar } from './createDiscreteApi'
 import dayjs from 'dayjs'
 import invalidDate from './invalidDate'
 import formatDate from './formatDate'
+import getFormData from './getFormData'
+
 dayjs.extend(invalidDate)
 
 export default {
@@ -16,5 +18,6 @@ export default {
     app.config.globalProperties.$loadingBar = loadingBar
     app.config.globalProperties.$dayjs = dayjs
     app.config.globalProperties.$formatDate = formatDate
+    app.config.globalProperties.$getFormData = getFormData
   },
 }
