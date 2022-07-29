@@ -133,6 +133,7 @@ export default defineComponent({
           value: null,
           startPlaceholder: '创建开始时间',
           endPlaceholder: '创建结束时间',
+          clearable: true,
         },
       } as FormDataModel,
       commodityTypeMap: {

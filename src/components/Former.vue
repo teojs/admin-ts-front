@@ -63,7 +63,9 @@
           v-else-if="!item.hidden"
           :label="item.label"
           :path="`${key}.value`"
-          :rule="item.rule"
+          :rule="
+            item.rule || item.type === 'numberRange' ? numberRangeRule : undefined
+          "
         >
           <template #label>
             {{ item.label }}
@@ -78,7 +80,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import type { FormInst } from 'naive-ui'
+import type { FormInst, FormItemRule } from 'naive-ui'
 import type { FormDataModel, FormDataModelItem } from '@/types/former'
 
 export default defineComponent({
@@ -109,7 +111,22 @@ export default defineComponent({
     },
   },
   data() {
-    return {}
+    return {
+      numberRangeRule: {
+        type: 'array',
+        validator: (rule, value, callback) => {
+          if (Array.isArray(value)) {
+            if (value.some(isNaN)) {
+              callback(new Error('只能输入数字'))
+            }
+            if (Number(value[0]) > Number(value[1])) {
+              callback(new Error('范围结束值必须大于开始值'))
+            }
+          }
+          callback()
+        },
+      } as FormItemRule,
+    }
   },
   beforeCreate() {},
   created() {},

@@ -10,7 +10,7 @@
     <n-space class="buttons">
       <slot name="right" />
       <n-button type="primary" @click="onSearch"> 搜索 </n-button>
-      <n-button type="warning"> 重置 </n-button>
+      <n-button type="warning" @click="onReset"> 重置 </n-button>
     </n-space>
   </div>
   <div class="button-collapsed" @click="gridCollapsed = !gridCollapsed">
@@ -104,6 +104,11 @@ export default defineComponent({
     },
     checkNoNull(value: string | number | any[]): boolean {
       return value !== '' && value !== undefined && value !== null
+    },
+    onReset() {
+      for (const key in this.searchData) {
+        this.searchData[key].value = null
+      }
     },
   },
   filters: {},
