@@ -8,6 +8,8 @@ export type FormItemType =
   // 数字输入框，区别于input，
   // 这个只能是number类型，且会有加减按钮
   | 'inputNumber'
+  // 数字范围，对应value必须是[number, number]
+  | 'numberRange'
   // 区域文本器
   | 'textarea'
   // 选择器
@@ -16,8 +18,6 @@ export type FormItemType =
   | 'cascader'
   // 单个日期选择器
   | 'date'
-  // 日期范围选择器
-  | 'daterange'
   // 颜色选择器
   | 'color'
   // 数组，会自动生成可新增和删除的数组表单
@@ -106,6 +106,11 @@ export interface FormDataModelItem {
   startPlaceholder?: string
   endPlaceholder?: string
 
+  clearable?: boolean
+
+  // 范围时的分割字符，默认 -
+  separator?: string
+
   // 禁用可选日期
   isDateDisabled?: (
     current: number,
@@ -119,5 +124,5 @@ export interface FormDataModel {
 }
 
 export interface FormerMethods {
-  validForm: <D = any>(cb: (data: D) => void) => void
+  validForm: <>(cb: () => void) => void
 }

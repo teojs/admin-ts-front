@@ -30,13 +30,13 @@ export default defineComponent({
   methods: {
     onUpdatePage(page: number) {
       this.pagination.page = page
-      this.getMainList(page)
+      this.getMainList()
     },
     onUpdatePageSize(pageSize: number) {
       this.pagination.page = 1
       this.pagination.pageSize = pageSize
       this.getMainList()
     },
-    getMainList(page?: number) {},
+    getMainList() {},
   },
 })

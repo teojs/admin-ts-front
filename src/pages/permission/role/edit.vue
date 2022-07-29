@@ -28,17 +28,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import type { FormDataModel, FormerMethods } from '@/types/former'
-interface FromDataValue {
-  name: string
-  age: number
-  bodyInfo: string
-  height: number
-  weight: number
-  likes: {
-    name: string
-    proficiency: string
-  }[]
-}
 
 export default defineComponent({
   name: 'role-role',
@@ -207,9 +196,9 @@ export default defineComponent({
   methods: {
     validForm() {
       const formerRef = this.$refs.former as FormerMethods
-      formerRef.validForm<FromDataValue>((data) => {
+      formerRef.validForm(() => {
         // eslint-disable-next-line no-console
-        console.log(data)
+        console.log(this.formData)
       })
     },
   },

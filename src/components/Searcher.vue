@@ -1,6 +1,7 @@
 <template>
   <div class="searcher">
     <former
+      ref="formRef"
       :form-data="searchData"
       :show-label="false"
       :collapsed="gridCollapsed"
@@ -8,7 +9,7 @@
     />
     <n-space class="buttons">
       <slot name="right" />
-      <n-button type="primary"> 搜索 </n-button>
+      <n-button type="primary" @click="onSearch"> 搜索 </n-button>
       <n-button type="warning"> 重置 </n-button>
     </n-space>
   </div>
@@ -28,7 +29,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import type { FormDataModel } from '@/types/former'
+import type { FormDataModel, FormerMethods } from '@/types/former'
+import type { SearchCriterias } from '@/types/searcher'
 
 export default defineComponent({
   name: 'component name here',
@@ -40,8 +42,8 @@ export default defineComponent({
         return {
           name: {
             label: 'ID',
-            type: 'input',
-            value: '',
+            type: 'numberRange',
+            value: null,
             placeholder: '请输入ID进行搜索',
             rule: {
               type: 'string',
@@ -52,6 +54,7 @@ export default defineComponent({
       },
     },
   },
+  emits: ['onSearch'],
   data() {
     return {
       gridCollapsed: true,
@@ -68,8 +71,39 @@ export default defineComponent({
   beforeUnmount() {},
   unmounted() {},
   methods: {
-    getFormDataValues() {
-      return 1
+    onSearch() {
+      const formerRef = this.$refs.formRef as FormerMethods
+      formerRef.validForm(() => {
+        const searchData = this.formateSeachData(this.searchData)
+        this.$emit('onSearch', searchData)
+      })
+    },
+    formateSeachData(originData: FormDataModel): SearchCriterias {
+      const newData: SearchCriterias = []
+      for (const key in originData) {
+        if (Object.prototype.hasOwnProperty.call(originData, key)) {
+          const e = originData[key]
+          if (e?.value || e?.value?.some(this.checkNoNull)) {
+            const item = {
+              key,
+              minValue: null,
+              maxValue: null,
+              value: null,
+            }
+            if (Array.isArray(e?.value)) {
+              item.minValue = e?.value?.[0]
+              item.maxValue = e?.value?.[1]
+            } else {
+              item.value = e?.value
+            }
+            newData.push(item)
+          }
+        }
+      }
+      return newData
+    },
+    checkNoNull(value: string | number | any[]): boolean {
+      return value !== '' && value !== undefined && value !== null
     },
   },
   filters: {},
