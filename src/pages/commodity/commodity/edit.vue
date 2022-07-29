@@ -18,7 +18,7 @@
 <route lang="json">
 {
   "meta": {
-    "title": "角色编辑",
+    "title": "商品编辑",
     "hidden": true,
     "keepAlive": true
   }
