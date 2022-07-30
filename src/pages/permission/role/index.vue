@@ -1,5 +1,5 @@
 <template>
-  <keep-alive-view hash="permission-role" />
+  <keep-alive-view depth="3" />
 </template>
 
 <route lang="json">
@@ -20,7 +20,6 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'permission-role',
   components: {},
-  data: () => ({}),
   activated() {},
   beforeCreate() {},
   created() {},

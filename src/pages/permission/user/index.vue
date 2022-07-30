@@ -1,5 +1,5 @@
 <template>
-  <keep-alive-view hash="permission-user" />
+  <keep-alive-view depth="3" />
 </template>
 
 <route lang="json">

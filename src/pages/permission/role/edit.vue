@@ -41,7 +41,7 @@ interface FromDataValue {
 }
 
 export default defineComponent({
-  name: 'role-role',
+  name: 'permission-role-edit',
   components: {},
   data() {
     return {

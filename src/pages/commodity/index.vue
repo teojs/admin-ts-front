@@ -1,5 +1,5 @@
 <template>
-  <keep-alive-view hash="commodity" />
+  <keep-alive-view depth="2" />
 </template>
 
 <route lang="json">

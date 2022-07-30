@@ -22,8 +22,8 @@ module.exports = {
     }),
   },
   rules: {
-    'no-console': 1,
-    'no-debugger': 1,
+    'no-console': process.env.mode === 'production' ? 1 : 0,
+    'no-debugger': process.env.mode === 'production' ? 1 : 0,
     'space-before-function-paren': ['error', 'never'],
     quotes: ['error', 'single'],
     semi: ['error', 'never'],

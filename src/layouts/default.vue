@@ -71,20 +71,9 @@
         </div>
         <keep-alive-tabs :tabs="keepAliveTabs" @onClose="rmKeepAliveTab" />
       </n-layout-header>
-      <router-view v-slot="{ Component, route }">
-        <transition name="route-transform" mode="out-in">
-          <keep-alive>
-            <n-layout-content :key="route.name || ''" class="content">
-              <keep-alive>
-                <component :is="Component" :key="route.name || ''" />
-              </keep-alive>
-            </n-layout-content>
-          </keep-alive>
-        </transition>
-      </router-view>
-      <!-- <n-layout-content class="content">
-        <router-view />
-      </n-layout-content> -->
+      <n-layout-content class="content">
+        <keep-alive-view depth="1" />
+      </n-layout-content>
     </n-layout>
   </n-layout>
 </template>
@@ -120,11 +109,16 @@ export default defineComponent({
     collapsedMenu: false,
     menuOptions: [] as any[],
     isDark: false,
+    // caches: '',
+    caches: ['commodity', 'permission', 'keep-alive-view'],
   }),
   created() {
+    // this.caches = this.$route.path.split('/')[1]
     this.extractMenu()
     this.isDark = this.colorScheme === 'dark'
   },
+  mounted() {},
+  unmounted() {},
   methods: {
     renderMenuLabel(option: MenuOption): VNode | string | undefined {
       if (option.children) {
@@ -180,21 +174,6 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-/* route-transform */
-.route-transform-leave-active,
-.route-transform-enter-active {
-  width: 100%;
-  position: absolute;
-  transition: all 0.3s ease;
-}
-.route-transform-enter-from {
-  opacity: 0;
-  transform: translateY(30px);
-}
-.route-transform-leave-to {
-  opacity: 0;
-  transform: translateY(30px);
-}
 
 .home {
   height: 100vh;
