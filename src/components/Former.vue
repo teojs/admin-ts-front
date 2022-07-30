@@ -1,11 +1,16 @@
 <template>
-  <n-form ref="formRef"
+  <n-form
+    ref="formRef"
     class="former"
     :model="formData"
+    :show-label="showLabel"
   >
-    <n-grid :cols="cols"
+    <n-grid
+      :cols="cols"
       responsive="self"
       :x-gap="20"
+      :collapsed="collapsed"
+      :collapsed-rows="collapsedRows"
     >
       <template v-for="(item, key) in formData" :key="key">
         <!-- array -->
@@ -58,7 +63,10 @@
           v-else-if="!item.hidden"
           :label="item.label"
           :path="`${key}.value`"
-          :rule="item.rule"
+          :rule="
+            item.rule ||
+              (item.type === 'numberRange' ? numberRangeRule : undefined)
+          "
         >
           <template #label>
             {{ item.label }}
@@ -73,7 +81,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import type { FormInst } from 'naive-ui'
+import type { FormInst, FormItemRule } from 'naive-ui'
 import type { FormDataModel, FormDataModelItem } from '@/types/former'
 
 export default defineComponent({
@@ -90,10 +98,36 @@ export default defineComponent({
       type: String as PropType<string | number>,
       default: '1 400:2 600:3 800:4 1200:5',
     },
+    showLabel: {
+      type: Boolean as PropType<boolean>,
+      default: true,
+    },
+    collapsed: {
+      type: Boolean as PropType<boolean>,
+      default: false,
+    },
+    collapsedRows: {
+      type: Number as PropType<number>,
+      default: 1,
+    },
   },
-  emits: ['onCancel', 'onConfirm', 'onError'],
   data() {
-    return {}
+    return {
+      numberRangeRule: {
+        type: 'array',
+        validator: (rule, value, callback) => {
+          if (Array.isArray(value)) {
+            if (value.some(isNaN)) {
+              callback(new Error('只能输入数字'))
+            }
+            if (Number(value[0]) > Number(value[1])) {
+              callback(new Error('范围结束值必须大于开始值'))
+            }
+          }
+          callback()
+        },
+      } as FormItemRule,
+    }
   },
   beforeCreate() {},
   created() {},
@@ -109,31 +143,11 @@ export default defineComponent({
     addItem(target: FormDataModelItem[], item: FormDataModel | undefined) {
       target.push(JSON.parse(JSON.stringify(item)))
     },
-    validForm(fn: Function) {
+    validForm(cb: Function) {
       const formRef = this.$refs.formRef as FormInst
       formRef.validate((errors) => {
         if (!errors) {
-          const getData = (formData: FormDataModel) => {
-            const data: { [x: string]: any } = {}
-            for (const key in formData) {
-              if (Object.prototype.hasOwnProperty.call(formData, key)) {
-                const item = formData[key]
-                if (item.type === 'array') {
-                  data[key] = (item.value as FormDataModelItem[]).map((o) =>
-                    getData(o.value)
-                  )
-                } else {
-                  data[key] = item.value
-                }
-              }
-            }
-            return data
-          }
-
-          fn(getData(this.formData))
-          this.$emit('onConfirm', this.formData)
-        } else {
-          this.$emit('onError', errors)
+          cb()
         }
       })
     },

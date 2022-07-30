@@ -18,7 +18,7 @@
 <route lang="json">
 {
   "meta": {
-    "title": "角色编辑",
+    "title": "商品编辑",
     "hidden": true,
     "keepAlive": true
   }
@@ -28,17 +28,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import type { FormDataModel, FormerMethods } from '@/types/former'
-interface FromDataValue {
-  name: string
-  age: number
-  bodyInfo: string
-  height: number
-  weight: number
-  likes: {
-    name: string
-    proficiency: string
-  }[]
-}
 
 export default defineComponent({
   name: 'commodity-commodity-edit',
@@ -50,148 +39,95 @@ export default defineComponent({
           label: '基本信息',
           type: 'title',
         },
-        name: {
-          label: '姓名',
+        brandName: {
+          label: '品牌名称',
           type: 'input',
           value: '',
-          placeholder: '请输入姓名。',
-          rule: [
-            {
-              type: 'string',
-              required: true,
-            },
-            {
-              max: 10,
-              required: true,
-              message: 'xxxx',
-            },
-          ],
+          placeholder: '请输入品牌名称',
         },
-        age: {
-          label: '年龄',
+        categoryId: {
+          label: '商品分组id',
           type: 'inputNumber',
           value: 0,
-          placeholder: '请输入年龄',
-          rule: {
-            type: 'number',
-            required: true,
-          },
+          placeholder: '商品分组id',
         },
-        bodyInfo: {
-          label: '身体数据',
-          type: 'title',
+        commodityCode: {
+          label: '商品编码',
+          type: 'input',
+          value: '',
+          placeholder: '请输入商品编码',
+          rule: [{ type: 'string', required: true, message: '请输入商品编码' }],
         },
-        height: {
-          label: '身高',
-          type: 'inputNumber',
-          value: 0,
-          placeholder: '请输入身高',
-          rule: {
-            type: 'number',
-            required: true,
-          },
-        },
-        weight: {
-          label: '体重',
-          type: 'inputNumber',
-          value: 0,
-          placeholder: '请输入体重',
-          rule: {
-            type: 'number',
-            required: true,
-          },
-        },
-        sex: {
-          label: '性别',
+        commodityType: {
+          label: '商品类型',
           type: 'select',
-          value: 0,
-          placeholder: '请选择性别',
+          value: '',
+          placeholder: '请选择商品类型',
           options: [
             {
-              label: '男',
-              value: 1,
+              label: '虚拟物品',
+              value: 'VIRTUAL',
             },
             {
-              label: '女',
-              value: 0,
+              label: '积分',
+              value: 'POINT',
+            },
+            {
+              label: '实物',
+              value: 'REAL',
             },
           ],
           rule: {
-            type: 'number',
+            type: 'string',
             required: true,
+            message: '请选择商品类型',
           },
         },
-        likes: {
-          label: '技能',
-          type: 'array',
-          value: [],
-          fields: {
-            name: {
-              label: '技能名称',
-              type: 'input',
-              rule: {
-                type: 'string',
-                required: true,
-              },
-            },
-            proficiency: {
-              label: '熟练度',
-              type: 'inputNumber',
-              rule: {
-                type: 'number',
-                required: true,
-              },
-            },
-          },
+        description: {
+          label: '商品描述',
+          type: 'textarea',
+          value: '',
+          placeholder: '请输入商品描述',
+          rule: [{ type: 'string', required: true, message: '请输入商品描述' }],
         },
-        birthday: {
-          label: '生日',
-          type: 'date',
-          value: null,
-          placeholder: '请选择出生日期',
-          isDateDisabled: (current) => {
-            return current > Date.now()
-          },
+        marketPrice: {
+          label: '市场价',
+          type: 'inputNumber',
+          value: 0,
+          placeholder: '请输入市场价',
         },
-        learnDate: {
-          label: '学习时间',
-          type: 'date',
-          dateType: 'datetimerange',
-          value: null,
-          placeholder: '请选择出生日期',
-          startPlaceholder: '请选择开始日期',
-          endPlaceholder: '请选择结束日期',
-          isDateDisabled: (current, phase, value) => {
-            return current > Date.now()
-          },
+        model: {
+          label: '型号',
+          type: 'input',
+          value: '',
+          placeholder: '请输入型号',
         },
-        switch: {
-          label: '开关',
+        purchasePrice: {
+          label: '进货价',
+          type: 'inputNumber',
+          value: 0,
+          placeholder: '请输入进货价',
+        },
+        isDeleted: {
+          label: '是否已删除',
           type: 'switch',
           value: false,
         },
-        radio: {
-          label: '单选',
-          type: 'radio',
-          value: '吃',
-          options: [
-            {
-              label: '吃',
-              value: '吃',
-            },
-            {
-              label: '喝',
-              value: '喝',
-            },
-            {
-              label: '玩',
-              value: '玩',
-            },
-            {
-              label: '乐',
-              value: '乐',
-            },
-          ],
+        isMultiSize: {
+          label: '是否多商品规格',
+          type: 'switch',
+          value: false,
+        },
+        isEnabled: {
+          label: '是否启用',
+          type: 'switch',
+          value: false,
+        },
+        isVisible: {
+          label: '是否上下架',
+          type: 'switch',
+          value: true,
+          rule: [{ type: 'boolean', required: true, message: '请选择' }],
         },
       } as FormDataModel,
     }
@@ -207,10 +143,47 @@ export default defineComponent({
   methods: {
     validForm() {
       const formerRef = this.$refs.former as FormerMethods
-      formerRef.validForm<FromDataValue>((data) => {
-        // eslint-disable-next-line no-console
-        console.log(data)
+      formerRef.validForm(() => {
+        this.commoditycommondityCreat()
       })
+    },
+    commoditycommondityCreat() {
+      const formData: {
+        brandName: string
+        categoryId: number
+        commodityName: string
+        commodityCode: string
+        commodityType: string
+        description: string
+        isDeleted: boolean
+        isEnabled: boolean
+        isMultiSize: boolean
+        isVisible: boolean
+        marketPrice: number
+        model: string
+        purchasePrice: number
+      } = this.$getFormData(this.formData)
+      this.$api.commodity
+        .commondityCreat({
+          data: {
+            brandName: formData?.brandName,
+            categoryId: formData?.categoryId,
+            commodityName: formData?.commodityName,
+            commodityCode: formData?.commodityCode,
+            commodityType: formData?.commodityType,
+            description: formData?.description,
+            isDeleted: formData?.isDeleted,
+            isEnabled: formData?.isEnabled,
+            isVisible: formData?.isVisible,
+            isMultiSize: formData?.isMultiSize,
+            marketPrice: formData?.marketPrice,
+            model: formData?.model,
+            purchasePrice: formData?.purchasePrice,
+          },
+        })
+        .then((res) => {
+          console.log(res)
+        })
     },
   },
   filters: {},

@@ -5,6 +5,7 @@
     v-model:value="data.value"
     :disabled="data.disabled"
     :placeholder="data.placeholder"
+    :clearable="data.clearable"
     @update:value="data.onChange && data.onChange($event)"
   >
     <template v-if="data.prefix" #prefix>
@@ -21,6 +22,7 @@
     v-model:value="data.value"
     :disabled="data.disabled"
     :placeholder="data.placeholder"
+    :clearable="data.clearable"
     @update:value="data.onChange && data.onChange($event)"
   >
     <template v-if="data.prefix" #prefix>
@@ -31,6 +33,16 @@
     </template>
   </n-input-number>
 
+  <n-input
+    v-if="data.type === 'numberRange'"
+    v-model:value="data.value"
+    pair
+    :separator="data.separator || '-'"
+    :placeholder="[data.startPlaceholder || '从', data.endPlaceholder || '到']"
+    clearable
+    @update:value="data.onChange && data.onChange($event)"
+  />
+
   <!-- select -->
   <n-select
     v-if="data.type === 'select'"
@@ -40,6 +52,7 @@
     :multiple="data.multiple"
     :placeholder="data.placeholder"
     options-change
+    :clearable="data.clearable"
     :filterable="data.filterable"
     :virtual-scroll="false"
     :max-tag-count="data.maxTagCount"
@@ -60,7 +73,7 @@
     :disabled="data.disabled"
     :placeholder="data.placeholder"
     :max-tag-count="data.maxTagCount"
-    clearable
+    :clearable="data.clearable"
     @update:value="data.onChange && data.onChange($event)"
   />
 
@@ -70,6 +83,7 @@
     v-model:value="data.value"
     :disabled="data.disabled"
     :modes="data.colorType"
+    :clearable="data.clearable"
   />
 
   <!-- radio -->
@@ -108,7 +122,7 @@
     :type="data.dateType || 'date'"
     :disabled="data.disabled"
     :placeholder="data.placeholder"
-    clearable
+    :clearable="data.clearable"
     :start-placeholder="data.startPlaceholder"
     :end-placeholder="data.endPlaceholder"
     :is-date-disabled="data.isDateDisabled"
@@ -121,7 +135,7 @@
     v-model:value="data.value"
     type="textarea"
     :disabled="data.disabled"
-    clearable
+    :clearable="data.clearable"
   />
 
   <!-- image -->

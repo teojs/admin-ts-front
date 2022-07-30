@@ -15,7 +15,7 @@ interface Servers {
 
 const servers: Servers = {
   prod: 'http://127.0.0.1:3000',
-  test: 'http://127.0.0.1:3000',
+  test: 'http://pandacodgen-demo.icyanstone.com',
 }
 const proxyTarget = process.env.npm_config_api || 'test'
 const basePath = process.env.npm_config_base || '/'
