@@ -18,7 +18,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'commodity-commodity',
+  name: 'CommodityCommodity',
   components: {},
   activated() {},
   beforeCreate() {},

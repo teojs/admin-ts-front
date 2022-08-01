@@ -30,7 +30,7 @@ import { defineComponent } from 'vue'
 import type { FormDataModel, FormerMethods } from '@/types/former'
 
 export default defineComponent({
-  name: 'commodity-commodity-edit',
+  name: 'CommodityCommodityEdit',
   components: {},
   data() {
     return {

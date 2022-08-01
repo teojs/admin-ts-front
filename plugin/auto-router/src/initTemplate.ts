@@ -21,9 +21,10 @@ export default function initTemplate(filePath: string) {
         /component name here/g,
         filePath
           .replace(process.cwd(), '')
-          .replace('/src/pages/', '')
+          .replace('\\src\\pages', '')
           .replace('.vue', '')
-          .replace(/\\|\//g, '-')
+          // .replace(/\\|\//g, '-')
+          .replaceAll(/\\[a-z]/g, (match) => match.charAt(1).toUpperCase())
       )
     )
 

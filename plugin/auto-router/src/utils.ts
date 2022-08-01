@@ -8,9 +8,11 @@ import path from 'node:path'
  * @return {*}  {boolean}
  */
 export function isVue(filePath: string): boolean {
-  return fs.existsSync(filePath) &&
+  return (
+    fs.existsSync(filePath) &&
     fs.statSync(filePath).isFile() &&
     path.extname(filePath) === '.vue'
+  )
 }
 
 /**
@@ -34,16 +36,16 @@ export function mergePath(...paths: string[]): string {
 }
 
 /**
- * 转首字母大写
+ * 转首字母大写，以及/x替换为X
  *
  * @param {string} word
  * @return {*}  {string}
  */
 export function firstUpperCase(word: string): string {
-  if (!word) return ''
-  word = word.replace(/_|\.|\//g, '')
-  const [a, ...z]: string[] = word.split('')
-  return a.toUpperCase() + z.join('')
+  if (typeof word !== 'string') return ''
+  return word
+    .replaceAll(/\/[a-z]/g, (match) => match.charAt(1).toUpperCase())
+    .replace(/^[a-z]/, (match) => match.toUpperCase())
 }
 
 export function getVarName($1: string, $2: string): string {

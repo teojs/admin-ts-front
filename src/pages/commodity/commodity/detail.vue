@@ -1,16 +1,18 @@
 <template>
-  <keep-alive-view depth="2" />
+  CommodityCommodityDetail
+  <router-view v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component" />
+    </keep-alive>
+  </router-view>
 </template>
 
 <route lang="json">
 {
   "meta": {
-    "title": "权限管理",
-    "sort": 2,
-    "isMenu": true,
-    "keepAlive": true
-  },
-  "redirect": "/permission/role/list"
+    "title": "CommodityCommodityDetail",
+    "sort": 1
+  }
 }
 </route>
 
@@ -18,10 +20,14 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'Permission',
+  name: 'CommodityCommodityDetail',
   components: {},
-  activated() {},
+  data() {
+    return {}
+  },
   beforeCreate() {},
+  activated() {},
+  deactivated() {},
   created() {},
   beforeMount() {},
   mounted() {},

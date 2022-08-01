@@ -5,7 +5,7 @@
 <route lang="json">
 {
   "meta": {
-    "title": "用户列表",
+    "title": "用户详情",
     "hidden": true
   }
 }
@@ -15,7 +15,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'permission-user-detail',
+  name: 'PermissionUserDetail',
   components: {},
   beforeCreate() {},
   created() {},

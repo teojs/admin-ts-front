@@ -6,6 +6,9 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
+    "lib": [
+      "ESNext"
+    ]
   },
   "include": [
     "vite.config.ts",

@@ -78,7 +78,7 @@ interface InternalRowData {
 }
 
 export default defineComponent({
-  name: 'commodity-commodity-list',
+  name: 'CommodityCommodityList',
   components: {},
   mixins: [listMixin],
   data() {

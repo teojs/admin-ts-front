@@ -29,7 +29,7 @@ const autoRouter = (cusConfig: CusConfig) => ({
       const pagesDir = cusConfig.pagesDir || 'src/pages'
       const rootPath = path.join(process.cwd(), pagesDir)
       fs.watch(rootPath, { recursive: true }, (eventType, fileName) => {
-        const filePath = path.posix.join(rootPath, fileName)
+        const filePath = path.join(rootPath, fileName)
         if (isVue(filePath)) {
           if (isEmptyFile(filePath)) {
             initTemplate(filePath)
