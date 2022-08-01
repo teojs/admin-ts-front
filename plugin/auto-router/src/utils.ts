@@ -56,6 +56,16 @@ export function getPath($1: string, $2: string): string {
   return path.posix.join('/', $1, $2).replace('_', ':')
 }
 
+export function getComponentName(fullPath: string): string {
+  try {
+    const regExp = new RegExp(`pages${path.sep}(.+?).vue`)
+    const paths = fullPath.match(regExp)[1].split(path.sep).map(firstUpperCase)
+    return paths.join('')
+  } catch (error) {
+    return 'unknown'
+  }
+}
+
 /**
  * 校验是否空文件
  *
