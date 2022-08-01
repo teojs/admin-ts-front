@@ -36,19 +36,24 @@ export function mergePath(...paths: string[]): string {
 }
 
 /**
- * 转首字母大写，以及/x替换为X
+ * 转首字母大写
  *
  * @param {string} word
  * @return {*}  {string}
  */
 export function firstUpperCase(word: string): string {
   if (typeof word !== 'string') return ''
-  return word
-    .replaceAll(/\/[a-z]/g, (match) => match.charAt(1).toUpperCase())
-    .replace(/^[a-z]/, (match) => match.toUpperCase())
+  return word.replace(/^[a-z]/, (match) => match.toUpperCase())
+}
+
+export function pathSepUpperCase(str: string): string {
+  if (typeof str !== 'string') return ''
+  return str.replaceAll(/\/[a-z]|\\[a-z]/g, (match) => match.charAt(1).toUpperCase())
 }
 
 export function getVarName($1: string, $2: string): string {
+  $1 = pathSepUpperCase($1)
+  $2 = pathSepUpperCase($2)
   return firstUpperCase($1) + firstUpperCase($2)
 }
 
