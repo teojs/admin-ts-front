@@ -58,8 +58,11 @@ export function getPath($1: string, $2: string): string {
 
 export function getComponentName(fullPath: string): string {
   try {
-    const regExp = new RegExp(`pages${path.sep}(.+?).vue`)
-    const paths = fullPath.match(regExp)[1].split(path.sep).map(firstUpperCase)
+    const regExp = /pages(.+?).vue/
+    const paths = fullPath
+      .match(regExp)[1]
+      .split(/\/|\\/)
+      .map(firstUpperCase)
     return paths.join('')
   } catch (error) {
     return 'unknown'
