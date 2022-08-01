@@ -7,7 +7,7 @@
 <route lang="json">
 {
   "meta": {
-    "title": "permission-user-list-edit"
+    "title": "用户编辑"
   }
 }
 </route>
@@ -16,7 +16,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'permission-user-list-edit',
+  name: 'PermissionUserListEdit',
   components: {},
   data() {
     return {

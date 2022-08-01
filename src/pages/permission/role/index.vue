@@ -18,7 +18,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'permission-role',
+  name: 'PermissionRole',
   components: {},
   activated() {},
   beforeCreate() {},

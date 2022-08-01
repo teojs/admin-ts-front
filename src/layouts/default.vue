@@ -69,7 +69,7 @@
             </n-dropdown>
           </n-space>
         </div>
-        <keep-alive-tabs :tabs="keepAliveTabs" @onClose="rmKeepAliveTab" />
+        <keep-alive-tabs :tabs="keepAliveTabs" @onClose="closeTab" />
       </n-layout-header>
       <n-layout-content class="content">
         <keep-alive-view depth="1" />
@@ -160,11 +160,12 @@ export default defineComponent({
       }
     },
 
-    rmKeepAliveTab(tab: KeepAliveTab, isActive: boolean) {
+    closeTab(tab: KeepAliveTab, isActive: boolean) {
       this.$store.commit('app/rmKeepAliveTab', {
         tab,
         isActive,
       })
+      this.$store.commit('app/rmCaches', tab.caches)
     },
   },
   computed: {
@@ -174,7 +175,21 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-
+/* route-transform */
+.route-transform-leave-active,
+.route-transform-enter-active {
+  width: 100%;
+  position: absolute;
+  transition: all 0.3s ease;
+}
+.route-transform-enter-from {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.route-transform-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
 .home {
   height: 100vh;
   padding: 10px;

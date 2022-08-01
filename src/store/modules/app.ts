@@ -6,12 +6,20 @@ export default {
 
   state: {
     colorScheme: 'light',
-    keepAliveTabs: [{
-      title: '首页',
-      fullPath: '/home',
-      path: '/home',
-      name: 'home',
-    }],
+    keepAliveTabs: [
+      {
+        title: '首页',
+        fullPath: '/home',
+        path: '/home',
+        name: 'home',
+      },
+    ],
+    cachesRecord: [
+      {
+        name: 'Home',
+        count: 1,
+      },
+    ],
   } as AppState,
 
   getters: {
@@ -20,6 +28,9 @@ export default {
     },
     keepAliveTabs(state: AppState) {
       return state.keepAliveTabs
+    },
+    caches(state: AppState) {
+      return state.cachesRecord.filter((i) => i.count > 0).map((v) => v.name)
     },
   },
 
@@ -67,6 +78,28 @@ export default {
       if (index > -1) {
         state.keepAliveTabs.splice(index, 1)
       }
+    },
+
+    addCaches(state: AppState, caches: string[]) {
+      caches.forEach((i) => {
+        const find = state.cachesRecord.find(({ name }) => name === i)
+        if (find) {
+          ++find.count
+        } else {
+          state.cachesRecord.push({ name: i, count: 1 })
+        }
+      })
+    },
+
+    rmCaches(state: AppState, caches: string[]) {
+      caches.forEach((i) => {
+        const find = state.cachesRecord.find(({ name }) => name === i)
+        if (find) {
+          --find.count
+        } else {
+          console.error('正在尝试删除一个没有添加进缓存的路由', i)
+        }
+      })
     },
   },
 }

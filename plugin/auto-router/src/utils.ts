@@ -42,13 +42,18 @@ export function mergePath(...paths: string[]): string {
  * @return {*}  {string}
  */
 export function firstUpperCase(word: string): string {
-  if (!word) return ''
-  word = word.replace(/_|\.|\//g, '')
-  const [a, ...z]: string[] = word.split('')
-  return a.toUpperCase() + z.join('')
+  if (typeof word !== 'string') return ''
+  return word.replace(/^[a-z]/, (match) => match.toUpperCase())
+}
+
+export function pathSepUpperCase(str: string): string {
+  if (typeof str !== 'string') return ''
+  return str.replaceAll(/\/[a-z]|\\[a-z]/g, (match) => match.charAt(1).toUpperCase())
 }
 
 export function getVarName($1: string, $2: string): string {
+  $1 = pathSepUpperCase($1)
+  $2 = pathSepUpperCase($2)
   return firstUpperCase($1) + firstUpperCase($2)
 }
 
