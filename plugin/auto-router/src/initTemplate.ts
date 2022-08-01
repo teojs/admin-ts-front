@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import fs from 'node:fs'
 import path from 'node:path'
+import { getComponentName } from './utils'
 
 /**
  * 自动写入模板
@@ -17,14 +18,7 @@ export default function initTemplate(filePath: string) {
     })
     fs.writeFileSync(
       filePath,
-      template.replace(
-        /component name here/g,
-        filePath
-          .replace(process.cwd(), '')
-          .replace('/src/pages/', '')
-          .replace('.vue', '')
-          .replace(/\\|\//g, '-')
-      )
+      template.replace(/component name here/g, getComponentName(filePath))
     )
 
     console.log('==空文件模板写入成功！\n')
