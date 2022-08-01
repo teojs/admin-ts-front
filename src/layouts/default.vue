@@ -69,7 +69,7 @@
             </n-dropdown>
           </n-space>
         </div>
-        <keep-alive-tabs :tabs="keepAliveTabs" @onClose="rmKeepAliveTab" />
+        <keep-alive-tabs :tabs="keepAliveTabs" @onClose="closeTab" />
       </n-layout-header>
       <n-layout-content class="content">
         <keep-alive-view depth="1" />
@@ -160,11 +160,12 @@ export default defineComponent({
       }
     },
 
-    rmKeepAliveTab(tab: KeepAliveTab, isActive: boolean) {
+    closeTab(tab: KeepAliveTab, isActive: boolean) {
       this.$store.commit('app/rmKeepAliveTab', {
         tab,
         isActive,
       })
+      this.$store.commit('app/rmCaches', tab.caches)
     },
   },
   computed: {

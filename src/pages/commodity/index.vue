@@ -7,7 +7,8 @@
   "meta": {
     "title": "商品管理",
     "sort": 3,
-    "isMenu": true
+    "isMenu": true,
+    "keepAlive": true
   },
   "redirect": "/commodity/commodity/list"
 }
@@ -17,7 +18,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'commodity',
+  name: 'Commodity',
   components: {},
   activated() {},
   beforeCreate() {},

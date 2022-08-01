@@ -49,7 +49,7 @@ interface InternalRowData {
 }
 
 export default defineComponent({
-  name: 'permission-role-list',
+  name: 'PermissionRoleList',
   components: {},
   mixins: [listMixin],
   data() {

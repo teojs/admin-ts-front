@@ -27,7 +27,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Index',
       component: defaultLayout,
       children: routes,
       redirect: '/home',
@@ -37,7 +37,7 @@ const router = createRouter({
     },
     {
       path: '/login',
-      name: 'login',
+      name: 'Login',
       component: () => import('../views/login.vue'),
     },
     {
@@ -57,12 +57,15 @@ router.beforeEach((to, from, next) => {
   if (currentRoute?.meta.keepAlive) {
     const keepAliveTabs: KeepAliveTab[] = store.getters['app/keepAliveTabs']
     const existIndex = _.find(keepAliveTabs, { fullPath: to.fullPath })
+    const caches = to.matched.map((i) => i.name)
     if (!existIndex) {
       store.commit('app/addKeepAliveTab', {
         path: to.path,
         title: to.meta.title,
         fullPath: to.fullPath,
+        caches,
       } as KeepAliveTab)
+      store.commit('app/addCaches', caches)
     }
   }
   next()

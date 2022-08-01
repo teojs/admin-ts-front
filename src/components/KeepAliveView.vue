@@ -2,7 +2,7 @@
   <!-- <router-view /> -->
   <router-view v-slot="{ Component, route }">
     <!-- <transition name="route-transform" mode="out-in"> -->
-    <keep-alive>
+    <keep-alive :include="caches">
       <component
         :is="Component"
         v-if="checkAndRecordCaches(route)"
@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { RouteLocationNormalizedLoaded } from 'vue-router'
+import type { RouteLocationNormalizedLoaded } from 'vue-router'
 export default defineComponent({
   name: 'keep-alive-view',
   props: {
@@ -30,7 +30,6 @@ export default defineComponent({
   },
   data() {
     return {
-      caches: ['commodity', 'commodity-commodity', 'commodity-commodity-list', 'permission', 'permission-role', 'permission-role-list', 'permission', 'permission-user', 'permission-user-list'],
       currentMatchedRoutePaths: [] as string[],
       currentKey: '',
     }
@@ -38,30 +37,42 @@ export default defineComponent({
   created() {},
   methods: {
     checkAndRecordCaches(route: RouteLocationNormalizedLoaded): boolean {
+      const paths = route.matched.map((i) => i.path)
       const depth = Number(this.depth)
-      const nextKey = route.matched[depth].path
-      // 初始化
+      paths.length = depth
+      // 底层路由根据传参不同缓存多个
+      const nextKey = route.path === route.matched[depth]?.path ? route.fullPath : route.matched[depth]?.path
+      // 上层或当前路由不存在时，退出
+      if (!nextKey) return false
+      if (route.matched[depth - 1] === undefined) return false
+      // 初始化或顶层路由，缓存
       if (this.currentMatchedRoutePaths.length === 0) {
-        this.currentMatchedRoutePaths = route.matched.map((i) => i.path)
-        this.currentMatchedRoutePaths.length = depth
+        this.currentMatchedRoutePaths = paths
         this.currentKey = nextKey
         return true
       }
-      // 顶层一直会缓存
       if (depth === 1) {
+        // this.currentMatchedRoutePaths = paths
         this.currentKey = nextKey
         return true
       }
       // 上层切换时，不缓存
       if (this.currentMatchedRoutePaths[depth - 1] !== route.matched[depth - 1].path) return false
-      // 当前路由改变且上层不变，缓存
+      // 上层不变，当前路由改变，缓存
       if (this.currentMatchedRoutePaths[depth] !== route.matched[depth].path) {
+        // this.currentMatchedRoutePaths = paths
         this.currentKey = nextKey
         return true
       }
       console.error('有其他情况导致路由组件被缓存', route)
+      // this.currentMatchedRoutePaths = paths
       this.currentKey = nextKey
       return true
+    },
+  },
+  computed: {
+    caches() {
+      return this.$store.getters['app/caches']
     },
   },
 })
