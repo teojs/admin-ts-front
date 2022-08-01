@@ -28,12 +28,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import type { FormDataModel, FormerMethods } from '@/types/former'
-
 export default defineComponent({
   name: 'CommodityCommodityEdit',
   components: {},
   data() {
     return {
+      id: '',
       formData: {
         baseInfo: {
           label: '基本信息',
@@ -58,6 +58,14 @@ export default defineComponent({
           placeholder: '请输入商品编码',
           rule: [{ type: 'string', required: true, message: '请输入商品编码' }],
         },
+        commodityName: {
+          label: '商品名称',
+          type: 'input',
+          value: '',
+          placeholder: '请输入商品名称',
+          rule: [{ type: 'string', required: true, message: '请输入商品名称' }],
+        },
+
         commodityType: {
           label: '商品类型',
           type: 'select',
@@ -135,6 +143,14 @@ export default defineComponent({
   beforeCreate() {},
   created() {},
   beforeMount() {},
+  activated() {
+    const id: any = this.$route.query?.id
+    this.id = id
+    if (this.id) {
+      this.getDetails(this.id)
+    }
+  },
+
   mounted() {},
   beforeUpdate() {},
   updated() {},
@@ -144,6 +160,10 @@ export default defineComponent({
     validForm() {
       const formerRef = this.$refs.former as FormerMethods
       formerRef.validForm(() => {
+        if (this.id) {
+          this.commondityEdit(this.id)
+          return
+        }
         this.commoditycommondityCreat()
       })
     },
@@ -182,7 +202,80 @@ export default defineComponent({
           },
         })
         .then((res) => {
-          console.log(res)
+          if (res.code === '01') {
+            this.$message.success(res?.message || '')
+            this.$router.go(-1)
+          } else {
+            this.$message.error(res?.message || '')
+          }
+        })
+    },
+    // 获取详情
+    getDetails(id: any) {
+      this.$api.commodity
+        .getById({
+          params: { id },
+        })
+        .then((res) => {
+          if (res.code === '01') {
+            this.formData.brandName.value = res.body?.brandName
+            this.formData.categoryId.value = res.body?.categoryId
+            this.formData.commodityCode.value = res.body?.commodityCode
+            this.formData.commodityName.value = res.body?.commodityName
+            this.formData.commodityType.value = res.body?.commodityType
+            this.formData.description.value = res.body?.description
+            this.formData.marketPrice.value = res.body?.marketPrice
+            this.formData.model.value = res.body?.model
+            this.formData.purchasePrice.value = res.body?.purchasePrice
+            this.formData.isDeleted.value = res.body?.isDeleted
+            this.formData.isMultiSize.value = res.body?.isMultiSize
+            this.formData.isEnabled.value = res.body?.isEnabled
+            this.formData.isVisible.value = res.body?.isVisible
+          }
+        })
+    },
+    commondityEdit(id: any) {
+      const formData: {
+        brandName: string
+        categoryId: number
+        commodityName: string
+        commodityCode: string
+        commodityType: string
+        description: string
+        isDeleted: boolean
+        isEnabled: boolean
+        isMultiSize: boolean
+        isVisible: boolean
+        marketPrice: number
+        model: string
+        purchasePrice: number
+      } = this.$getFormData(this.formData)
+      this.$api.commodity
+        .commondityEdit({
+          data: {
+            brandName: formData?.brandName,
+            categoryId: formData?.categoryId,
+            commodityName: formData?.commodityName,
+            commodityCode: formData?.commodityCode,
+            commodityType: formData?.commodityType,
+            description: formData?.description,
+            isDeleted: formData?.isDeleted,
+            isEnabled: formData?.isEnabled,
+            id,
+            isVisible: formData?.isVisible,
+            isMultiSize: formData?.isMultiSize,
+            marketPrice: formData?.marketPrice,
+            model: formData?.model,
+            purchasePrice: formData?.purchasePrice,
+          },
+        })
+        .then((res) => {
+          if (res.code === '01') {
+            this.$message.success(res?.message || '')
+            this.$router.go(-1)
+          } else {
+            this.$message.error(res?.message || '')
+          }
         })
     },
   },
