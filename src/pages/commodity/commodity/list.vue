@@ -3,11 +3,7 @@
     <searcher ref="searcher"
       :search-data="searchData"
       @onSearch="onSearch"
-    >
-      <template #left>
-        <n-button type="primary"> 导入 </n-button>
-      </template>
-    </searcher>
+    />
 
     <option-bar>
       <template #left>

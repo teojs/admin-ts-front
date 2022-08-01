@@ -174,7 +174,21 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-
+/* route-transform */
+.route-transform-leave-active,
+.route-transform-enter-active {
+  width: 100%;
+  position: absolute;
+  transition: all 0.3s ease;
+}
+.route-transform-enter-from {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.route-transform-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
 .home {
   height: 100vh;
   padding: 10px;

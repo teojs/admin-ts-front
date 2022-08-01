@@ -2,10 +2,25 @@ import { createRouter, createWebHistory, isNavigationFailure } from 'vue-router'
 import defaultLayout from '@/layouts/default.vue'
 import NotFound from '@/views/404.vue'
 import routes from './routes'
-import { loadingBar } from '@/utils/createDiscreteApi'
 import store from '@/store'
 import _ from 'lodash'
 import type { KeepAliveTab } from '@/types/store/app'
+import {
+  createDiscreteApi,
+  ConfigProviderProps,
+  lightTheme,
+  darkTheme,
+} from 'naive-ui'
+
+const theme = store.getters['app/colorScheme']
+
+const configProviderProps: ConfigProviderProps = {
+  theme: theme === 'light' ? lightTheme : darkTheme,
+}
+
+const { loadingBar } = createDiscreteApi(['loadingBar'], {
+  configProviderProps,
+})
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
