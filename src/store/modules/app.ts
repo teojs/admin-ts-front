@@ -11,7 +11,7 @@ export default {
         title: '首页',
         fullPath: '/home',
         path: '/home',
-        name: 'home',
+        name: 'Home',
       },
     ],
     cachesRecord: [
@@ -30,7 +30,7 @@ export default {
       return state.keepAliveTabs
     },
     caches(state: AppState) {
-      return state.cachesRecord.filter((i) => i.count > 0).map((v) => v.name)
+      return state.cachesRecord?.filter((i) => i.count > 0).map((v) => v.name)
     },
   },
 
