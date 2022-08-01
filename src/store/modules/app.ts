@@ -62,7 +62,7 @@ export default {
       }
     ) {
       const index = _.findIndex(state.keepAliveTabs, {
-        path: payload.tab.path,
+        fullPath: payload.tab.fullPath,
       })
       if (index > -1) {
         state.keepAliveTabs.splice(index, 1)

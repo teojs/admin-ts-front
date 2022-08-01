@@ -7,8 +7,7 @@
 <route lang="json">
 {
   "meta": {
-    "title": "permission-user-list-edit",
-    "sort": 1
+    "title": "permission-user-list-edit"
   }
 }
 </route>

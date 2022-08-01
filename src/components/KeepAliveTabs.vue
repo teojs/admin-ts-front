@@ -6,10 +6,10 @@
     >
       <router-link
         v-for="(tab, i) in tabs"
-        :key="tab.path"
-        v-slot="{ isActive }"
-        :to="(tab.path as string)"
+        :key="tab.fullPath"
+        :to="(tab.fullPath as string)"
         class="tabs-item"
+        :class="{ isActive: tab.fullPath === $route.fullPath }"
       >
         <span class="title">
           {{ tab.title }}
@@ -17,7 +17,7 @@
         <span
           v-if="i !== 0"
           class="close-button"
-          @click.prevent.self="close(tab, isActive)"
+          @click.prevent.self="close(tab, tab.fullPath === $route.fullPath)"
         >
           <n-icon class="icon-close">
             <CloseOutlineIcon />
@@ -62,13 +62,17 @@ export default defineComponent({
       if (isActive) {
         const length = this.tabs.length
         if (length > 0) {
-          this.$router.push(this.tabs[length - 1].path as string)
+          this.$router.push(this.tabs[length - 1].fullPath)
         }
       }
     },
   },
   filters: {},
-  computed: {},
+  computed: {
+    fullPath() {
+      return this.$route.fullPath
+    },
+  },
   watch: {},
 })
 </script>
@@ -133,7 +137,7 @@ export default defineComponent({
         pointer-events: none;
       }
     }
-    &.router-link-active {
+    &.isActive {
       background-color: var(--tabs-main-bg-active);
       color: var(--tabs-main-font-active);
     }
